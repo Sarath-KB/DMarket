@@ -1,0 +1,152 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Product</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/background.jpg' %}");
+        background-size: 1540px 900px;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .card-c {
+        padding: 21px 15px;
+        box-shadow: 30px 30px 35px black;
+        background-color: rgba(255, 255, 255, 0.289);
+        border-radius: 10px;
+        width: fit-content;
+        padding-top: 70px;
+    }
+
+    .main {
+        margin-top: 150PX;
+        display: flex;
+        width: fit-content;
+        justify-content: center;
+    }
+
+    .main:hover {
+        transition: 0.5s;
+        transform: scale(1.08);
+
+    }
+
+    .img {
+        position: absolute;
+        margin-top: -117px;
+    }
+
+    .row-c {
+        margin-top: 127px;
+        display: flex;
+        justify-content: center;
+        color: white;
+    }
+    .space {
+        margin-top: 5px;
+        color: white;
+    }
+
+    .button-c {
+        color: white;
+        padding: 55px;
+        margin-left: 25px;
+    }
+
+    .button-c:hover {
+        color: red;
+        transition: 0.3s;
+    }
+</style>
+<body>
+    <form action="" method="post">
+
+
+        <div class="container">
+            <div class="row row-c">
+                {% for i in farmer %}
+                <div class="col-3 main">
+                    <div><img src="{{ i.productid.pdt_image.url}}" alt="" width="190" height="190" style="border-radius: 50%;    margin-left: 55px;" class="img"></div>
+                    <div class="card-c">
+                        <!-- <div><img src="{{ i.productid.pdt_image.url}}" alt="" width="190" height="190" style="border-radius: 50%; margin-left: 15px;"></div> -->
+                        <div class="space">Farmer Name : {{i.productid.farmer.far_name}}</div>
+                        <div style="display: flex;">Farmer Address : <div style="width: 151px;"> {{i.productid.farmer.far_address}}</div></div>
+                        <div class="space">Item Name : {{i.productid.pdt_name}}</div>
+                        <div class="space">Item Quantity : {{i.fquantity}}</div>
+                        <div class="space">Item Amount : {{i.productid.pdt_rate}}</div>
+                        <div class="space">Total : {{i.fquantity|mul:i.productid.pdt_rate}}</div>
+                        <!-- <div class="space">
+                            {% if i.bookingid.booking_status == '3' %}
+                            <div></div>
+                            {% else %}
+                            <div><a href="{%url 'webcustomer:deletefitembooking' i.id  %}" class="button-c">Cancel Booking</a></div>
+                            {% endif %}
+                        </div> -->
+                    </div>
+                </div>
+                {% endfor %}
+                <div align="right" style="margin-right: 50px;"><a href="{% url 'webcustomer:farmerdeliveredbills' fbkid %}"><b
+                            style="font-size: 25px;padding: 15px;color: white;">Bills</b></a></div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- <table align="center">
+            <tr>
+                {% for i in farmer %}
+                <td>
+                    <div style="border:1px solid black;margin:20px;padding:20px">
+                    <img src="{{i.productid.pdt_image.url}}" alt="" width="220" height="200">
+                    <table width="220" cellspacing="10px">
+                        <tr>
+                            <td>Item Name</td>
+                            <td>{{i.productid.pdt_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Quantity</td>
+                            <td>{{i.fquantity}}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Amount</td>
+                            <td>{{i.productid.pdt_rate}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>{{i.fquantity|mul:i.productid.pdt_rate}}</td>
+                        </tr>
+                        
+                        <tr>
+                            {% if i.bookingid.booking_status == '3'  %}
+                            <td></td>
+                            {% else %}
+                            <td colspan="2" align="center"><a href="{%url 'webcustomer:deletefitembooking' i.id  %}">Cancel Booking</a></td>
+                            {% endif %}
+                        </tr>
+                    </table>
+                </td>
+                {% if forloop.counter|divisibleby:3 %}
+                </tr>
+                <tr>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td align="right" colspan="3"><a href="{% url 'webcustomer:farmerbills' fbkid %}"><b style="font-size: 25px;padding: 15px;" >Bills</b></a></td>
+            </tr>
+        </table> -->
+    </form>
+</body>
+</html>
+{% endblock content %}

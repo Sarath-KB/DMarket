@@ -1,0 +1,23 @@
+{% if history %}
+<table class="main-con" cellpadding="10px">
+    <tr>
+        <tr>
+            <th>#</th>
+            <th>Customer Name</th>
+            <th>Booking Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+        </tr>
+        {% for i,j in history %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.user.cus_name}}</td>
+            <td>{{i.booking_date}}</td>
+            <td>{{j}}</td>
+            <td style="color: rgb(0, 220, 0);">Delivered</td>
+        </tr>
+        {% endfor %}
+</table>
+{% else %}
+<h2 style="color: red; margin-top: 100px; margin-left: 180px;" >No Products</h2>
+{% endif %}

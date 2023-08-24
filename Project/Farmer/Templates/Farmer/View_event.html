@@ -1,0 +1,84 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Event</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    .main {
+        margin-top: 120px;
+        background-color: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px;
+    }
+
+    .app {
+        padding: 10px;
+        background-color: #3866a9;
+        border-radius: 10px;
+        margin-top: 10px;
+        justify-content: center;
+        display: flex;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        <table align="center">
+            <tr>
+                <td>
+                    <div class="main">
+                    <div style="padding-left: 35px;"><img src="{{event.event_photo.url}}" alt="" style="border-radius: 30%;" width="200" height="200"></div>
+                    <table cellpadding="5px" style="margin-top: 15px;">
+                        <tr align="left">
+                            <td>Event</td>
+                            <td>{{event.event_name}}</td>
+                        </tr>
+                        <tr align="left">
+                            <td>Details</td>
+                            <td width="150">{{event.event_details}}</td>
+                        </tr>
+                        <tr align="left">
+                            <td>Event From Date</td>
+                            <td>{{event.event_fdate}}</td>
+                        </tr>
+                        <tr align="left">
+                            <td>Event To Date</td>
+                            <td>{{event.event_tdate}}</td>
+                        </tr>
+                    </table>
+                    <a href="{% url 'webfarmer:applyevents' event.id %}" style="color: white;"><div class="app">Apply</div></a>
+                </td>
+            </tr>
+            {% if mes %}
+           
+            <script>
+                if (confirm("Do You Want To Confirm"))
+                {
+                    //alert("Hai");
+                    window.location="../../Farmer/apllied/";
+                }
+            </script>
+            {% endif %}
+        </table>
+    </form>
+</body>
+</html>
+{% endblock content %}

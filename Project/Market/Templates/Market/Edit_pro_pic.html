@@ -1,0 +1,68 @@
+{% extends 'Market/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile Picture</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: black !important;
+    }
+
+    .temp-dark {
+        color: black !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: lime !important;
+    }
+
+    .temp-dark:hover {
+        color: lime !important;
+    }
+
+    .con {
+        margin-top: 150px;
+        margin-left: 600px;
+    }
+
+    .button {
+        padding: 6px 25px;
+        border-radius: 7px;
+        border: none;
+        /* border: 1px black solid; */
+        background-color: lime;
+        color: white;
+    }
+
+    .button:hover {
+        background-color: rgb(2, 219, 2);
+    }
+</style>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table cellpadding="15px" class="con">
+            <tr>
+                <td><img src="{{data.marphoto.url}}" alt="" width="310" height="200"></td>
+            </tr>
+            <tr>
+                <td><input type="file" name="txtpropic" required="required" id=""></td>
+            </tr>
+            <tr>
+                <td align="center"><input type="submit" class="button" value="Update"></td>
+            </tr>
+        </table>
+    </form>
+    {% if update %}
+    <script>alert('Profile Pic Updated.... ')
+    window.location='/Market/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

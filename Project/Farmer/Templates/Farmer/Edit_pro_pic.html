@@ -1,0 +1,61 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile Picture</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+
+    .main {
+        margin-top: 130px;
+        margin-left: 600px;
+        box-shadow: 0 0 30px;
+        width: fit-content;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .bt {
+        padding: 10px 100px;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        background-color: #3866a9;
+    }
+</style>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="main">
+            <div style="display: flex; justify-content: center;"><img src="{{ farmer.far_photo.url }}" width="200" height="200" alt=""></div>
+            <table cellpadding="10px">
+                <tr>
+                    <td><input type="file" name="txtphoto" required="required" id=""></td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="submit" value="Edit" class="bt"></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

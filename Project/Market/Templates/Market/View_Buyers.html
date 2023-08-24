@@ -1,0 +1,204 @@
+{% extends 'Market/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Buyers</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: lime !important;
+    }
+
+    .temp-dark {
+        color: lime !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+
+    .link {
+        background-color: lime;
+        padding: 7px 17px;
+        border-radius: 9px;
+    }
+
+    .link1 {
+        background-color: lime;
+        padding: 7px 10px;
+        border-radius: 9px;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% if farmer and customer %}
+        <table style="margin-top: 130px;" width="1530px">
+            <tr>
+                <td>
+                    <div style="border:1px solid black;margin:10px;padding:5px">
+                    <table width="700" cellpadding="5px">
+                        <tr>
+                            <th colspan="7">Farmer Booking</th>
+                        </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Farmer name</th>
+                            <th>Booking Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Products</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for i,j in farmer %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.farmer.far_name}}</td>
+                            <td>{{i.booking_date}}</td> 
+                            <td>{{j}}</td>
+                            {% if i.booking_status == 1 %}
+                            <td style="color: green;">Payed</td>
+                            {% elif i.booking_status == 2 %}
+                            <td style="color: red;">Cash On Delivery</td>
+                            {% else %}
+                            <td style="color: green;">Delivered</td>
+                            {% endif %}
+                            <td><a href="{% url 'webmarket:viewbuyerspdt' i.id %}" class="link1" style="color: white;">View Products</a></td>
+                            <td><a href="{% url 'webmarket:farmeritemdelivered' i.id %}" class="link1" style="color: white;">Item Delivered</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+                <td>
+                    <div style="border:1px solid black;margin:10px;padding:5px">
+                    <table width="700" cellpadding="4px">
+                        <tr>
+                            <th colspan="7">Customer Booking</th>
+                        </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Customer name</th>
+                            <th>Booking Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Products</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for i,j in customer %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.user.cus_name}}</td>
+                            <td>{{i.booking_date}}</td> 
+                            <td>{{j}}</td>
+                            {% if i.booking_status == '1' %}
+                            <td style="color: green;">Payed</td>
+                            {% elif i.booking_status == '2' %}
+                            <td style="color: red;">Cash On Delivery</td>
+                            {% else %}
+                            <td style="color: green;">Delivered</td>
+                            {% endif %}
+                            <td><a href="{% url 'webmarket:viewcustomerpdt' i.id %}" class="link1" style="color: white;">View Products</a></td>
+                            <td><a href="{% url 'webmarket:customeritemdelivered' i.id %}" class="link1" style="color: white;">Item Delivered</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
+        {% elif farmer %}
+        <table align="center">
+            <tr>
+                <td>
+                    <div style="border:1px solid black;margin:10px;padding:10px;margin-top: 150px;">
+                        <table width="1000" cellpadding="10px">
+                            <tr>
+                                <th colspan="7">Farmer Booking</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Farmer name</th>
+                                <th>Booking Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Products</th>
+                                <th>Action</th>
+                            </tr>
+                            {% for i,j in farmer %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.farmer.far_name}}</td>
+                                <td>{{i.booking_date}}</td> 
+                                <td>{{j}}</td>
+                                {% if i.booking_status == 1 %}
+                                <td style="color: green;">Payed</td>
+                                {% elif i.booking_status == 2 %}
+                                <td style="color: red;">Cash On Delivery</td>
+                                {% else %}
+                                <td style="color: green;">Delivered</td>
+                                {% endif %}
+                                <td><a href="{% url 'webmarket:viewbuyerspdt' i.id %}" class="link" style="color: white;">View Products</a></td>
+                                <td><a href="{% url 'webmarket:farmeritemdelivered' i.id %}" class="link" style="color: white;">Item Delivered</a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                </td>
+            </tr>
+        </table>
+        {% elif customer %}
+        <table align="center">
+            <tr>
+                <td>
+                    <div style="border:1px solid black;margin:10px;padding:10px;margin-top: 150px;">
+                        <table width="1000" cellpadding="10px">
+                            <tr>
+                                <th colspan="7">Customer Booking</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Customer name</th>
+                                <th>Booking Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Products</th>
+                                <th>Action</th>
+                            </tr>
+                            {% for i,j in customer %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.user.cus_name}}</td>
+                                <td>{{i.booking_date}}</td> 
+                                <td>{{j}}</td>
+                                {% if i.booking_status == '1' %}
+                                <td style="color: green;">Payed</td>
+                                {% elif i.booking_status == '2' %}
+                                <td style="color: red;">Cash On Delivery</td>
+                                {% else %}
+                                <td style="color: green;">Delivered</td>
+                                {% endif %}
+                                <td><a href="{% url 'webmarket:viewcustomerpdt' i.id %}" class="link" style="color: white;">View Products</a></td>
+                                <td><a href="{% url 'webmarket:customeritemdelivered' i.id %}" class="link" style="color: white;">Item Delivered</a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                </td>
+            </tr>
+        </table>
+        {% else %}
+        <h2 style="color: red; margin-top: 150px; margin-left: 700px;" >No Data</h2>
+        {% endif %}
+    </form>
+    {% if stat %}
+    <script>alert("Item Delivered")
+    window.location='/Market/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

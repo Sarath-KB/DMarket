@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'Farmer/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Farmer/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'Farmer/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'Farmer/css/style.css' %}" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Farmer/img/paddy.jpg' %}");
+        background-size: cover;
+    }
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+ }
+
+ .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+ }
+
+    .temp-dark {
+        color: #3866a9 !important;
+        background-color: white;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+        box-shadow: 0 0 20px;
+        transition: 0.3s;
+    }
+</style>
+<script type="text/javascript">
+    function preventBack() { window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+</script>
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <img src="{% static 'Customer/img/spinner.png' %}" alt="Loading..." />
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+        <a href="{% url 'webfarmer:home' %}" class="navbar-brand ms-4 ms-lg-0">
+            <img src="{% static 'Customer/img/d-logo.png' %}" width="100" height="80" alt="">
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav mx-auto p-4 p-lg-0">
+                <a href="{% url 'webfarmer:product' %}" class="nav-item nav-link">Add Product</a>
+                <a href="{% url 'webfarmer:search_mar' %}" class="nav-item nav-link">Search Market</a>
+                <a href="{% url 'webfarmer:mybookings' %}" class="nav-item nav-link">My Booking</a>
+                <a href="{% url 'webfarmer:viewapplicationrequuest' %}" class="nav-item nav-link">Event Request</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Messages <i class="fas fa-envelope"></i></a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'webfarmer:complaint' %}" class="dropdown-item">Complaint</a>
+                        <a href="{% url 'webfarmer:reply' %}" class="dropdown-item">Reply</a>
+                        <a href="{% url 'webfarmer:feedback' %}" class="dropdown-item">Feed Back</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Customers</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'webfarmer:buyers' %}" class="dropdown-item">Buyers</a>
+                        <a href="{% url 'webfarmer:delivereditem' %}" class="dropdown-item">Delivered Item</a>
+                        <a href="{% url 'webfarmer:report' %}" class="dropdown-item">Customer Report</a>
+                    </div>
+                </div>
+                <a href="{% url 'webfarmer:mycart' %}" class="nav-item nav-link">Cart <i class="fas fa-shopping-cart"></i></a>
+                <a href="{% url 'webfarmer:buyreport' %}" class="nav-item nav-link">Buy Report</a>
+            </div>
+            <div class=" d-none d-lg-flex">
+                <a href="{% url 'webfarmer:my_pro' %}" class="nav-item">
+                    <div class="flex-shrink-0 btn-lg-square border border-light rounded-circle temp-dark">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </a>
+            </div>
+            <style>
+                .icon-logout {
+                    color: rgb(255, 91, 91);
+                    background-color: white;
+                }
+
+                .icon-logout:hover {
+                    color: red;
+                    box-shadow: 0 0 20px red;
+                }
+
+            </style>
+            <div class="d-none d-lg-flex">
+                <a href="{% url 'webfarmer:logout' %}" class="nav-item">
+                    <div class="btn btn-lg-square icon-logout border-light rounded-circle" style="margin-left: 15px;">
+                        <i class="fas fa-power-off "></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+<style>
+    .mar {
+        margin-top: 100px;
+    }
+</style>
+<body>
+    <marquee behavior="" direction="" scrollamount="4" class="mar">
+        {% for i in eve %}
+        <a href="{% url 'webfarmer:viewevents' i.id %}" style="color: red;">{{i.event_name}}</a>
+        {% endfor %}
+    </marquee>
+    <h1 style="color: #3866a9;margin-left: 20px;">Welcome <span style="font-family: Brush Script MT;font-size: 50px;">{{far.far_name}}</span></h1>
+
+    {% if stock %}
+    <script>alert("Item Deleted..")
+    window.location='/Farmer/home/'
+    </script>
+    {% endif %}
+    {% if msg %}
+            <script>alert('You alerady applyed to this event.....')
+            window.location='/Farmer/home/'
+            </script>
+            {% endif %}
+
+    {% if pic %}
+    <script>alert('Profile Photo Update..')
+    window.location='/Farmer/home/'
+    </script>
+    {% endif %}
+
+    
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'Farmer/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'Farmer/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'Farmer/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'Farmer/lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'Farmer/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'Farmer/js/main.js' %}"></script>
+</body>
+
+</html>

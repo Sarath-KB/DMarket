@@ -1,0 +1,135 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sub Admin</title>
+</head>
+<body>
+    <h3 align="center" style="margin-top: 20px;color: #009CFF;;">Add Sub Admin</h3>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+            <table align="center">
+                <tr>
+                    <td>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="txtname" id="" required="required" autocomplete="off" class="form-control" pattern="[a-zA-Z ]{3}" title="Name Should be minimum 3 letter" placeholder="email">
+                            <label for="floatingInput">Name</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="txtnum" id="" class="form-control" required="required" autocomplete="off" pattern="[0-9]{10,10}" title="Contact number Should be 10 digits" placeholder="Contact">
+                            <label for="floatingInput">Contact</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-floating mb-3">
+                            <input type="email" name="txtemail" id="" class="form-control" required="required" autocomplete="off" placeholder="email">
+                            <label for="floatingInput">Email</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-floating">
+                            <textarea class="form-control" name="txtaddress" placeholder="Leave a comment here" required="required" autocomplete="off" id="floatingTextarea"
+                                style="height: 150px;"></textarea>
+                            <label for="floatingTextarea">Address</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-floating mb-3">
+                            <select name="seldis" class="form-select" id="floatingSelect" required="required"  aria-label="Floating label select example">
+                                <option value="">....Select.....</option>
+                                {% for i in district %}
+                                <option value="{{i.id}}">{{i.district_name}}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="floatingSelect">District</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Photo</label>
+                            <input type="file" class="form-control" name="txtphoto" required="required"  id="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-floating mb-3">
+                            <input type="password" name="txtpass" id="" class="form-control" required="required" autocomplete="off" placeholder="password">
+                            <label for="floatingInput">Password</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-floating mb-3">
+                            <input type="password" name="txtconpass" id="" class="form-control" required="required" autocomplete="off" placeholder="cpassword">
+                            <label for="floatingInput">Confirm Password</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Save" name="btnsub" class="btn btn-primary"> <input type="reset"
+                            value="Cancel" name="btncancel" class="btn btn-primary"></td>
+                </tr>
+            </table>
+
+            <br><br>
+            <div class="bg-light rounded h-100 p-4">
+                <table width="1100" cellspacing="10px" class="table table-hover">
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>District</th>
+                        <th>Photo</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for i in sadmin %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.sad_name}}</td>
+                        <td>{{i.sad_contact}}</td>
+                        <td>{{i.sad_email}}</td>
+                        <td>{{i.sad_address}}</td>
+                        <td>{{i.district.district_name}}</td>
+                        <td><img src="{{i.sad_photo.url}}" alt="" width="60" height="100"></td>
+                        <td class="btn btn-outline-primary m-2"><a href="{% url 'webadmin:deletesadmin' i.id %}">Remove</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </form>
+    {% if subinsmsg %}
+    <script>alert('Data Inserted...')</script>
+    {% endif %}
+    {% if re %}
+    <script>alert('Sub Admin Removed....')
+        window.location = '/Madmin/subadmin/'
+    </script>
+    {% endif %}
+</body>
+
+</html>
+{% endblock content %}

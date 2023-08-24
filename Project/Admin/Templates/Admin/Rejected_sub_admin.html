@@ -1,0 +1,49 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejected Sub Admin</title>
+</head>
+<h3 align="center" style="color: #009CFF;">Rejected Sub Admin</h3>
+<body>
+    <div class="container-fluid pt-4 px-4">
+    <div class="bg-light rounded h-100 p-4">
+    <table width="900" class="table table-hover">
+        <tr>
+            <th>Sl.No</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>District</th>
+            <th>Photo</th>
+            <th>Action</th>
+        </tr>
+        {% for i in resub %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.sad_name}}</td>
+            <td>{{i.sad_contact}}</td>
+            <td>{{i.sad_email}}</td>
+            <td>{{i.sad_address}}</td>
+            <td>{{i.district.district_name}}</td>
+            <td><img src="{{i.sad_photo.url}}" alt="" width="60" height="100"></td>
+            <td class="btn btn-outline-primary m-2"><a href="{% url 'webadmin:reapproveadmin' i.id %}">Re-approve</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    </div>
+    {% if re %}
+    <script>alert('Re-Approved..')
+    window.location='/Madmin/resubadmin/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

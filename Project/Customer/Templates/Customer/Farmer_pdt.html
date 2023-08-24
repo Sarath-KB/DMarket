@@ -1,0 +1,154 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Product</title>
+</head>
+<style>
+     .navbar .navbar-nav .nav-link {
+    color: blue !important;
+    }
+
+    .temp-dark {
+        color: blue !important;
+    }
+
+    .image {
+        transition: transform 0.1s ease-in-out; 
+    }
+    
+    .image:hover {
+        transform: scale(1.1);
+    }
+
+    .main {
+        margin-top: 122px;
+    }
+    
+    .content-width {
+        width: 342px;
+    }
+
+    .button-color {
+        background-color: #00ff00;
+        padding: 5px;
+        border-radius: 6px;
+        width: fit-content;
+        padding-right: 63px;
+        padding-left: 58px;
+    }
+
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        width: 307px;
+        /* justify-content: center; */
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        padding: 20px;
+        margin-right: 16px;
+        margin-bottom: 39px;
+        color: black;
+        transition: .3s;
+    }
+
+    .product-card:hover {
+        background-color: white; /* Set the background color of the div */
+        box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.553);
+    }
+
+    .d-btn{
+        padding: 5px;
+        background: none;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .d-btn:hover {
+        background-color: rgb(200, 255, 200); /* Set the background color of the div */
+        box-shadow: 0px 0px 30px rgb(85, 255, 85);
+    }
+</style>
+<body style="background: rgb(255, 255, 255);">
+    <!-- <form action="" method="post"> -->
+        <div class="container main">
+            <div class="row">
+                {% for i in data %}
+                <div class="col-3 product-card">
+                    <div><img src="{{i.pdt_image.url}}" class="image" style="border-radius: 10px;" alt="" width="200" height="150"></div>
+                    <div>
+                        <table width="265">
+                            <tr><td>Name</td><td>{{i.pdt_name}}</td></tr>
+                            <tr><td>Rate</td><td>{{i.pdt_rate}}</td></tr>
+                            <tr><td>Stock</td>
+                            {% if i.pdt_stock <= 0 %}
+                            <td style="color: red;">Out Of Stock</td>
+                            {% else %}
+                            <td>{{i.pdt_stock}}</td>
+                            {% endif %}
+                            </tr>
+                            <tr><td>Catageory</td><td>{{i.subcategory.cat.cat_name}}</td></tr>
+                            <tr><td>Sub Catagory</td><td>{{i.subcategory.subcat_name}}</td></tr>
+                            <tr><td width="40">Discription</td><td width="100">{{i.pdt_dis}}</td></tr>
+                        </table>
+                    </div>
+                    <div>
+                        <div><a href="{% url 'webcustomer:AddCart' i.id %}"><button class="d-btn">Add To Cart</button></a></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        
+        <!-- <table>
+            <tr>
+                {% for i in data %}
+                <td>
+                    <div style="border:1px solid black;margin:20px;padding:10px">
+                    <img src="{{i.pdt_image.url}}" alt="" width="200" height="150"><br>
+                    <table width="290">
+                        <tr><td>Name</td><td>{{i.pdt_name}}</td></tr>
+                        <tr><td>Rate</td><td>{{i.pdt_rate}}</td></tr>
+                        <tr><td>Stock</td>
+                        {% if i.pdt_stock <= 0 %}
+                        <td style="color: red;">Out Of Stock</td>
+                        {% else %}
+                        <td>{{i.pdt_stock}}</td>
+                        {% endif %}
+                        </tr>
+                        <tr><td>Catageory</td><td>{{i.subcategory.cat.cat_name}}</td></tr>
+                        <tr><td>Sub Catagory</td><td>{{i.subcategory.subcat_name}}</td></tr>
+                        <tr><td>Discription</td><td>{{i.pdt_dis}}</td></tr>
+                        <tr><td colspan="2" align="right"><a href="{% url 'webcustomer:AddCart' i.id %}">Add To Cart</a></td></tr>
+                    </table>
+                </td>
+                {% if forloop.counter|divisibleby:4 %}
+                </tr>
+                <tr>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table> -->
+    </form>
+    {% if error %}
+    <script>alert('Product Already Added to Cart..')
+    window.location="/Customer/home/"
+    </script>
+    {% endif %}
+    {% if ins %}
+    <script>alert('Product Added to Cart...')
+    window.location="/Customer/home/"
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

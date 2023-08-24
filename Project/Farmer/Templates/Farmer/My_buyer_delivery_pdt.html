@@ -1,0 +1,76 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: lime !important;
+    }
+
+    .temp-dark {
+        color: lime !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    .main-con {
+        margin-top: 130px;
+    }
+    .link {
+        background-color: lime;
+        padding: 7px 17px;
+        border-radius: 9px;
+        color: white;
+        justify-content: center;
+        display: flex;
+    }
+    tr:hover {
+        background-color: rgb(233, 233, 233);
+    }
+</style>
+<body>
+    <form action="" method="post">
+        <table class="main-con" align="center" width="800px" cellpadding="10px">
+            <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Payment Type</th>
+                <th>Action</th>
+            </tr>
+            {% for i in item %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="{{i.productid.pdt_image.url}}" width="100px" height="100px" alt=""></td>
+                <td>{{i.productid.pdt_name}}</td>
+                <td>{{i.fquantity}}</td>
+                <td>{{i.fquantity|mul:i.productid.pdt_rate}}</td>
+                {% if i.bookingid.booking_status == '1' %}
+                <td style="color: green;">Payed</td>
+                {% elif i.bookingid.booking_status == '2' %}
+                <td style="color: red;">Cash on Delivery</td>
+                {% else %}
+                <td>pending</td>
+                {% endif %}
+                <td><a href="{% url 'webmarket:delivery' i.id %}"><div class="link">Item Delivered</div></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+{% endblock content %}

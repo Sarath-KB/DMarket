@@ -1,0 +1,72 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Report</title>
+</head>
+<style>
+    .date {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px rgb(209, 209, 209) solid;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+            <table cellpadding="10px" align="center">
+                <tr>
+                    <td>From Date</td>
+                    <td><input type="date" name="txtfdate" class="date" id=""></td>
+                    <td>To Date</td>
+                    <td><input type="date" name="txttdate" class="date" id=""></td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="center"><input type="submit" class="btn btn-outline-primary m-2" value="Submit"></td>
+                </tr>
+            </table>
+            <br>
+            {% if farre %}
+                <table width="1300" cellpadding="5px" align="center">
+                    <tr>
+                        <th>#</th>
+                        <th>Farmer Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+                        <th>Local Place</th>
+                        <th>Place</th>
+                        <th>Date Of Join</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for i in farre %}
+                        <tr>
+                            <td width="10px">{{forloop.counter}}</td>
+                            <td>{{i.far_name}}</td>
+                            <td width="50px">{{i.far_email}}</td>
+                            <td width="50px">{{i.far_contact}}</td>
+                            <td width="300px">{{i.far_address}}</td>
+                            <td>{{i.locplace.loc_place_name}}</td>
+                            <td>{{i.locplace.pla.place_name}}</td>
+                            <td>{{i.far_doj}}</td>
+                            {% if i.far_status == '1' %}
+                                <td style="color: green;">Approved</td>
+                            {% elif i.far_status == '2' %}
+                                <td style="color: red;">Rejected</td>
+                            {% else %}
+                                <td style="color: #009CFF;">Pending</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,95 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Application Request</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+
+    .ma-c {
+        margin-top: 130px;
+        margin-left: 210px;
+    }
+    .bt {
+        padding: 5px 0px;
+        background-color: #3866a9;
+        border-radius: 10px;
+        display: flex;
+        color: white;
+        justify-content: center;
+        border: none;
+    }
+    .bt:hover {
+        background-color: limegreen;
+        transition: 0.5s;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        <table width="1200" cellpadding="10px" class="ma-c">
+            <tr>
+                <th>#</th>
+                <th>Event Name</th>
+                <th>Event Description</th>
+                <th>Event From Date</th>
+                <th>Event To Date</th>
+                <th>Market Name</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for i in datas %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.event.event_name}}</td>
+                <td width="300px" align="left">{{i.event.event_details}}</td>
+                <td>{{i.event.event_fdate}}</td>
+                <td>{{i.event.event_tdate}}</td>
+                <td>{{i.event.market.mar_name}}</td>
+                {% if i.status == '0' %}
+                <td style="color: red;">Not Viewed</td>
+                {% elif i.status == '1' %}
+                <td>{{i.replay}}</td>
+                {% elif i.status == '2' %}
+                <td style="color: green;">Approved</td>
+                {% elif i.status == '3' %}
+                <td style="color: red;">Rejected</td>
+                {% elif i.status == '4' %}
+                <td style="color: limegreen;">Arrived</td>
+                {% else %}
+                <td>Pending</td>
+                {% endif %}
+                {% if i.status == '4' %}
+                <td style="color: limegreen;">Event Completed</td>
+                {% else %}
+                <td><a href="{% url 'webfarmer:deleteeventapply' i.id %}"><div class="bt">Delete Request</div></a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    {% if de %}
+    <script>alert('Event Request Cancelled...')
+    window.location='/Farmer/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

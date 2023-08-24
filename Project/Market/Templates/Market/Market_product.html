@@ -1,0 +1,189 @@
+{% extends 'Market/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Product</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: lime !important;
+    }
+
+    .temp-dark {
+        color: lime !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    
+    .con{
+        margin-top: 100px;
+        margin-left: 590px;
+        color: black;
+    }
+
+    .text-box {
+        padding: 9px;
+        border-radius: 7px;
+        border: 1px gray solid;
+    }
+
+    .select-box {
+        padding: 9px;
+        width: 200px;
+        border-radius: 7px;
+        border: 1px gray solid;
+    }
+
+    .area-box {
+        padding: 11px;
+        border-radius: 8px;
+    }
+
+    .bt {
+        padding: 10px 100px;
+        border-radius: 10px;
+        border: none;
+        background: lime;
+        color: white;
+    }
+
+    .bt:hover {
+        background: rgb(2, 213, 2);
+    }
+
+    .link {
+        background-color: lime;
+        padding: 10px 17px;
+        display: flex;
+        justify-content: center;
+        border-radius: 10px;
+    }
+
+    .link:hover {
+        background-color: limegreen;
+    }
+
+    tr:hover {
+        background-color: rgb(216, 216, 216);
+    }
+</style>
+<body>
+    <form action="" method="post" id="marketproductform" data-place-url="{% url 'webfarmer:ajaxsubcat' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table class="con" cellpadding="10px">
+            <tr>
+                <td>Category</td>
+                <td>
+                    <select name="selcat" id="selcat" class="select-box" required="required">
+                        <option value="">...Select...</option>
+                        {% for i in cata %}
+                        <option value="{{i.id}}">{{i.cat_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Sub Category</td>
+                <td>
+                    <select name="selsubcat" id="selsubcat" class="select-box" required="required">
+                        <option value="">...Select...</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Item Name</td>
+                <td><input type="text" class="text-box" placeholder="Item Name" required="required" autocomplete="off" name="txtname" id=""></td>
+            </tr>
+            <tr>
+                <td>Rate</td>
+                <td><input type="text" name="txtrate" class="text-box" required="required" autocomplete="off" placeholder="Rate" id=""></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><textarea name="txtdes" id="" class="area-box" cols="20" required="required" autocomplete="off" placeholder="Description" rows="5"></textarea></td>
+            </tr>
+            <tr>
+                <td>Stock</td>
+                <td><input type="text" name="txtstock" class="text-box" required="required" autocomplete="off" placeholder="Stock" id=""></td>
+            </tr>
+            <tr>
+                <td>Image</td>
+                <td><input type="file" name="txtimage"  id="" required="required"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" class="bt" value="Ok" name="btnsub"></td>
+            </tr>
+        </table>
+        {% if pro %}
+        <script>alert('Product Inserted....')
+        window.location='/Market/product/'
+        </script>
+        {% endif %}
+        <br>
+        <table width="1500" cellpadding="10px"  style="margin-left: 10px;">
+            <tr>
+                <th>Sl.No</th>
+                <th>Item Name</th>
+                <th>Item Rate</th>
+                <th>Item Discription</th>
+                <th>Stock</th>
+                <th>Item Image</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Action</th> 
+            </tr>
+            {% for i in pdt %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.pdt_name}}</td>
+                <td>{{i.pdt_rate}}</td>
+                <td width="400px">{{i.pdt_dis}}</td>
+                {% if i.pdt_stock <= 0 %}
+                <td style="color:red">Out Of Stock</td>
+                {% else %}
+                <td>{{i.pdt_stock}}</td>
+                {% endif %}
+                <td><img src="{{i.pdt_image.url}}" alt="" width="40" height="60"></td>
+                <td>{{i.subcategory.cat.cat_name}}</td>
+                <td>{{i.subcategory.subcat_name}}</td>
+                <td width="150px"><a href="{% url 'webmarket:deleteitem' i.id %}" style="color: white;"><div class="link">Delete Item</div></a>
+                    <a href="{% url 'webmarket:stock' i.id %}" style="color: white;"><div class="link" style="margin-top: 10px;">Update</div></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+    </form>
+    {% if de %}
+    <script>alert('Data Deleted...')
+    window.location='/Market/product/'
+    </script>
+    {% endif %}
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#selcat").change(function () {
+        var did = $(this).val();
+        var ur = $("#marketproductform").attr("data-place-url");
+        $.ajax({
+            url: ur,
+            data: { disd: did, },
+            success: function (data) {
+                $("#selsubcat").html(data);
+            },
+        });
+    });
+    </script>
+{% endblock content %}

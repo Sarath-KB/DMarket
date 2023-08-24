@@ -1,0 +1,40 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile Picture</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/BG-Image1.jpg' %}");
+    }
+</style>
+<body>
+    <div class="container-fluid d-bg-image">
+    <form action="" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="d-profile">
+            <div class="d-card">
+                <div>
+                    <img src="{{ picdata.cus_photo.url }}" alt="" width="200" height="200" style="border-radius: 50%;">
+                </div>
+                <div>
+                    <input type="file" name="txtpropic" required="required" id="">
+                </div>
+                <div><input type="submit" class="d-card-button" name="Update" value="Update" style="width: 100%;"></div>
+            </div>
+        </div>
+    </form>
+    </div>
+    {% if inserted %}
+    <script>alert("Profile Photo is updated..")
+    window.location='/Customer/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

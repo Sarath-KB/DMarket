@@ -1,0 +1,39 @@
+
+
+
+<div class="container">
+    <div class="row" id="result" style="gap:4rem; justify-content: center;">
+        {% for i in mar %}
+        <div class="col-3 far-card">
+            <div style="text-align:center;border:1px solid white;padding:20px;color: white;">
+                <div><img src="{{i.marphoto.url}}" alt="" width="140" style="border-radius: 10px;" height="140">
+                </div>
+                <div>{{i.mar_name}}</div>
+                <div>{{i.mar_contact}}</div>
+                <div>{{i.mar_email}}</div>
+                <div><a href="{% url 'webfarmer:marketprofile' i.id %}"><button class="link">Show More</button></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- <table cellspacing="60" align="center">
+    <tr>
+    {% for i in mar %}
+        <td>
+            <div style="text-align:center;border:1px solid black;margin:22px;padding:20px">
+                <img src="{{i.marphoto.url}}" alt="" width="140" height="140"><br>
+                    {{i.mar_name}}<br>
+                    {{i.mar_contact}}<br>
+                    {{i.mar_email}}
+                    <p align="right"><a href="{% url 'webfarmer:marketprofile' i.id %}">Show More</a></p>
+            </div>
+        </td>
+        {% if forloop.counter|divisibleby:4 %}
+    </tr>
+    <tr>
+        {% endif %}
+    {% endfor %}
+</table> -->

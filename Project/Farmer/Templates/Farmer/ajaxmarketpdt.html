@@ -1,0 +1,54 @@
+<table id="result" align="center">
+    <tr>
+        {% for i in mdata %}
+        <td>
+            <div style="border:1px solid black;margin:20px;padding:10px;border-radius: 10%;" class="card">
+            <span style="margin-left: 40px;"><img src="{{i.pdt_image.url}}" style="border-radius: 10%;" alt="" width="200" height="150"></span><br>
+            <table width="290" style="color: black;">
+                <tr><td>Name</td><td>{{i.pdt_name}}</td></tr>
+                <tr><td>Rate</td><td>{{i.pdt_rate}}</td></tr>
+                <tr><td>Stock</td>
+                {% if i.pdt_stock <= 0 %}
+                <td style="color:red">Out Of Stock</td>
+                {% else %}
+                <td>{{i.pdt_stock}}</td>
+                {% endif %}
+                </tr>
+                <tr><td>Catageory</td><td>{{i.subcategory.cat.cat_name}}</td></tr>
+                <tr><td>Sub Catagory</td><td>{{i.subcategory.subcat_name}}</td></tr>
+                <tr><td>Discription</td><td>{{i.pdt_dis}}</td></tr>
+                <tr><td colspan="2" align="center" class="cart-btn"><a href="{% url 'webfarmer:marketcart' i.id %}">Add To Cart</a></td></tr>
+            </table>
+        </td>
+        {% if forloop.counter|divisibleby:4 %}
+        </tr>
+        <tr>
+            {% endif %}
+        {% endfor %}
+    </tr>
+</table>
+
+<!-- 
+<table id="result" align="center">
+    <tr>
+        {% for i in mdata %}
+        <td>
+            <div style="border:1px solid black;margin:20px;padding:10px">
+            <img src="{{i.pdt_image.url}}" alt="" width="200" height="150"><br>
+            <table width="290">
+                <tr><td>Name</td><td>{{i.pdt_name}}</td></tr>
+                <tr><td>Rate</td><td>{{i.pdt_rate}}</td></tr>
+                <tr><td>Stock</td><td>{{i.pdt_stock}}</td></tr>
+                <tr><td>Catageory</td><td>{{i.subcategory.cat.cat_name}}</td></tr>
+                <tr><td>Sub Catagory</td><td>{{i.subcategory.subcat_name}}</td></tr>
+                <tr><td>Discription</td><td>{{i.pdt_dis}}</td></tr>
+                <tr><td colspan="2" align="right"><a href="{% url 'webfarmer:marketcart' i.id %}">Add To Cart</a></td></tr>
+            </table>
+        </td>
+        {% if forloop.counter|divisibleby:4 %}
+        </tr>
+        <tr>
+            {% endif %}
+        {% endfor %}
+    </tr>
+</table> -->

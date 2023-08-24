@@ -1,0 +1,253 @@
+{% extends 'Guest/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Registration</title>
+</head>
+<style>
+    body{
+        background-image: url("{% static 'Login/img/farmer-bg.jpg' %}");
+        background-size: auto 2000px;
+    }
+</style>
+<body>
+    <div class="container-xxl py-6">
+        <div class="container">
+            <div class="row g-0 justify-content-center">
+                <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
+                    <form action="" method="post" id="farmerreg" data-place-url="{% url 'webadmin:ajaxplace'%}" data-localplace-url="{% url 'webguest:ajaxlocplace' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" name="txtfname" id="" class="form-control" required="required" autocomplete="off" pattern="[a-zA-Z]{4,20}" title="Enter Correct Name without space" onchange="nameval(this)" placeholder="First name">  
+                                        <span id="name"></span>
+                                        <label for="name">First Name</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" name="txtlname" id="" class="form-control" required="required" autocomplete="off" pattern="[a-zA-Z]{4,20}" title="Enter Correct Name without space" onchange="nameval(this)" placeholder="last name"> 
+                                        <span id="name"></span>
+                                        <label for="name">Last Name</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="email" name="txtemail" id="" class="form-control" required="required" autocomplete="off" onchange="emailval(this)" placeholder="Email">   
+                                        <span id="content"></span><span id="content1"></span>
+                                        <label for="name">Email</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" name="txtcontact" id="" class="form-control" required="required" pattern="[0-9]{10,10}" title="Enter Correct Contact Number" autocomplete="off" onchange="checknum(this),chemail(this.value)" placeholder="Contact"> 
+                                        <span id="contact"></span> 
+                                        <label for="name">Contact</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" style="margin-left: 200px;">
+                                <div class="form-floating">
+                                    <textarea name="txtaddress" id="" class="form-control" required="required" placeholder="Address" autocomplete="off" style="height: 100px; width: 425px;" ></textarea>
+                                    <label for="message">Address</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <select name="selfarmtype" id="selfarmtype" class="form-select" required="required" placeholder="District">
+                                            <option value="">...Select...</option>
+                                            {% for i in farmer %}
+                                            <option value="{{i.id}}">{{i.farm_type}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="email">Farm Type</label> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <select name="seldis" id="seldis" class="form-select" required="required" placeholder="District">
+                                            <option value="">...Select...</option>
+                                            {% for i in ddata %}
+                                            <option value="{{i.id}}">{{i.district_name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="email">District</label> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <select name="selplace" id="selplace" class="form-select" required="required" placeholder="Place">
+                                            <option value="">...Select...</option>
+                                        </select>
+                                        <label for="email">Place</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <select name="sellocplace" id="sellocplace" class="form-select" required="required" placeholder="Local Place">
+                                            <option value="">...Select...</option>
+                                        </select>
+                                        <label for="email">Local Place</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="file" name="txtphoto" id="" class="form-control" required="required" placeholder="Photo">    
+                                        <label for="name">Photo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="file" name="txtproof" id="" class="form-control" required="required" placeholder="proof">    
+                                        <label for="name">Proof</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="password" name="txtpass" id="" class="form-control" required="required" placeholder="password"> 
+                                        <label for="name">Password</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="password" name="txtconpass" id="" class="form-control" required="required" onchange="chkpwd(this,txtpass)" placeholder="cpassword">
+                                        <span id="pass"></span>  
+                                        <label for="name">Confirm Password</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <input class="btn btn-primary rounded-pill py-3 px-5" type="submit" value="Register" name="Register"> 
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if farinsmsg %}
+    <script>alert('You Registred Sucessfully....')</script>
+    {% endif %}
+    {% if passs %}
+    <script>alert('Error In Password...!!!')
+    window.location='/Guest/farmer_reg/'
+    </script>
+    {% endif %}
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#seldis").change(function () {
+        var did = $(this).val();
+        var ur = $("#farmerreg").attr("data-place-url");
+        $.ajax({
+            url: ur,
+            data: { disd: did, },
+            success: function (data) {
+                $("#selplace").html(data);
+            },
+        });
+    });
+    $("#selplace").change(function () {
+        var did = $(this).val();
+        var ur = $("#farmerreg").attr("data-localplace-url");
+        $.ajax({
+            url: ur,
+            data: { disd: did, },
+            success: function (data) {
+                $("#sellocplace").html(data);
+            },
+        });
+    });
+    </script>
+
+<script>
+      function chemail(elemvalue)
+    {
+        //alert(elemvalue);
+        $.ajax({
+            url: '/Guest/ajaxemail/',
+            data: { email: elemvalue, },
+            success: function (data) {
+                $("#content1").html(data);
+            },
+        });
+    }
+    function chkpwd(txtrp, txtp) {
+        if ((txtrp.value) != (txtp.value)) {
+            document.getElementById("pass").innerHTML = "<span style='color: red;'>Passwords Mismatch</span>";
+        }
+    }
+
+    function checknum(elem) {
+        var numericExpression = /^[0-9]{10,10}$/;
+        if (elem.value.match(numericExpression)) {
+            document.getElementById("contact").innerHTML = "";
+            return true;
+        }
+        else {
+            document.getElementById("contact").innerHTML = "<span style='color: red;'>Numbers Only, Only 10 Digits are allowed</span>";
+            elem.focus();
+            return false;
+        }
+    }
+
+
+
+    function emailval(elem) {
+        var emailexp = /^([a-zA-Z0-9.\_\-])+\@([a-zA-Z0-9.\_\-])+\.([a-zA-Z]{2,4})$/;
+        if (elem.value.match(emailexp)) {
+            document.getElementById("content").innerHTML = "";
+            return true;
+        }
+        else {
+
+            document.getElementById("content").innerHTML = "<span style='color: red;'>Check Email Address Entered</span>";;
+            elem.focus();
+            return false;
+        }
+    }
+    function nameval(elem) {
+        var emailexp = /^([A-Za-z ]*)$/;
+        if (elem.value.match(emailexp)) {
+            document.getElementById("name").innerHTML = "";
+            return true;
+        }
+        else {
+
+            document.getElementById("name").innerHTML = "<span style='color: red;'>Alphabets Are Allowed</span>";
+            elem.focus();
+            return false;
+        }
+    }
+</script>
+    {% endblock content %}

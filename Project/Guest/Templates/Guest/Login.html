@@ -1,0 +1,128 @@
+{% extends 'Guest/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body background="{% static 'Login/img/vege.jpg' %}">
+    <div class="container-xxl py-6">
+        <div class="container" style="margin-top: 150px;">
+            <div class="row g-0 justify-content-center">
+                <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" name="txtusname" id="" class="form-control" required="required" autocomplete="off" onchange="emailval(this)"
+                                            placeholder="Email"><span id="content"></span>
+                                        <label for="name">Email</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 200px;">
+                                    <div class="form-floating">
+                                        <input type="password" name="txtpassword" id="" class="form-control"  required="required"
+                                            placeholder="Password">
+                                        <label for="email">Password</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-6" style="margin-left: 500px;">
+                                    <div class="form-floating">
+                                        <a href="{% url 'webguest:forpass' %}">Forgot Password</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <input type="submit" value="Login" name="btnsub"
+                                    class="btn btn-primary rounded-pill py-3 px-5">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if submsg %}
+    <script>alert('Your access is Rejected')</script>
+    {% endif %}
+    {% if msg %}
+    <script>alert('Invalid User')</script>
+    {% endif %}
+    {% if far0 %}
+    <script>alert('Registration is pending..!!')</script>
+    {% endif %}
+    {% if far2 %}
+    <script>alert('Your Registration is Rejected...!!')</script>
+    {% endif %}
+    {% if mar1 %}
+    <script>alert('Registration is pending..!!')</script>
+    {% endif %}
+    {% if mar2 %}
+    <script>alert('Your Registration is Rejected...!!')</script>
+    {% endif %}
+</body>
+
+</html>
+<br><br><br>
+
+<script>
+    function chkpwd(txtrp, txtp) {
+        if ((txtrp.value) != (txtp.value)) {
+            document.getElementById("pass").innerHTML = "<span style='color: red;'>Passwords Mismatch</span>";
+        }
+    }
+
+    function checknum(elem) {
+        var numericExpression = /^[0-9]{10,10}$/;
+        if (elem.value.match(numericExpression)) {
+            document.getElementById("contact").innerHTML = "";
+            return true;
+        }
+        else {
+            document.getElementById("contact").innerHTML = "<span style='color: red;'>Numbers Only, Only 10 Digits are allowed</span>";
+            elem.focus();
+            return false;
+        }
+    }
+
+
+
+    function emailval(elem) {
+        var emailexp = /^([a-zA-Z0-9.\_\-])+\@([a-zA-Z0-9.\_\-])+\.([a-zA-Z]{2,4})$/;
+        if (elem.value.match(emailexp)) {
+            document.getElementById("content").innerHTML = "";
+            return true;
+        }
+        else {
+
+            document.getElementById("content").innerHTML = "<span style='color: red;'>Check Email Address Entered</span>";;
+            elem.focus();
+            return false;
+        }
+    }
+    function nameval(elem) {
+        var emailexp = /^([A-Za-z ]*)$/;
+        if (elem.value.match(emailexp)) {
+            document.getElementById("name").innerHTML = "";
+            return true;
+        }
+        else {
+
+            document.getElementById("name").innerHTML = "<span style='color: red;'>Alphabets Are Allowed</span>";
+            elem.focus();
+            return false;
+        }
+    }
+</script>
+{% endblock content %}

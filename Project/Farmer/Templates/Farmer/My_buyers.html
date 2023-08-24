@@ -1,0 +1,84 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyers</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    .main-co {
+        margin-top: 130px;
+        margin-left: 400px;
+    }
+
+    .btn-link {
+        padding: 10px;
+        background-color: lime;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .btn-link:hover {
+        color: white;
+        background-color: limegreen;
+    }
+</style>
+<body>
+    {% if buyers %}
+        <table cellpadding="10px" class="main-co">
+            <tr>
+                <th>#</th>
+                <th>Customer Name</th>
+                <th>Booking Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Product</th>
+                <th>Action</th>
+            </tr>
+            {% for i,j in buyers %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.user.cus_name}}</td>
+                <td>{{i.booking_date}}</td>
+                <td>{{j}}</td>
+                    {% if i.booking_status == '1' %}
+                    <td style="color: green;">Payed</td>
+                    {% elif i.booking_status == '2' %}
+                    <td style="color: red;">Cash on Delivery</td>
+                    {% else %}
+                    <td style="color: green;">Delivered</td>
+                    {% endif %}
+                <td><a href="{% url 'webfarmer:buyerspdt' i.id %}" class="btn-link">View Products</a></td>
+                <td><a href="{% url 'webfarmer:customerdelivereditem' i.id %}" class="btn-link">Item Delivered</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h2 style="color: red;margin-top: 130px;" align="center">No Buyers</h2>
+    {% endif %}
+    {% if deli %}
+    <script>alert("Item Delivered...")
+    window.location='/Farmer/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

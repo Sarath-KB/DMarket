@@ -1,0 +1,112 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint</title>
+</head>
+<style>
+    body{
+        background-image: url("{% static 'Customer/img/complaint.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: 1500px 900px;
+    }
+
+    .navbar .navbar-nav .nav-link {
+    color: black !important;
+ }
+
+ .navbar .navbar-nav .nav-link:hover {
+    color: #5afd90 !important;
+ }
+
+ .temp-dark {
+        color: black !important;
+    }
+
+    .con {
+        margin-top: 170px;
+        margin-left: 500px;
+    }
+
+    .sel {
+        padding: 10px 155px;
+        border-radius: 9px;
+    }
+
+    .main-c{
+        background-color: rgba(255, 255, 255, 0.663);
+        border-radius: 20px;
+        padding: 10px 10px; 
+        margin-left: 500px;
+        width: fit-content; 
+    }
+
+    .main-c:hover {
+        box-shadow: 0px 0px 35px red;
+    }
+
+    .content {
+        /* background-color: rgb(0, 0, 0); */
+        border-radius: 20px;
+        /* padding: 10px 10px; */
+        /* margin-top: 25px; */
+        border: 1px blue solid;
+    }
+
+    .con-bg {
+        background-color: transparent;
+    }
+
+    .send-bt {
+        padding: 6px 20px;
+        border-radius: 7px;
+        /* border: none; */
+        background-color: rgba(225, 225, 225, 0.604);
+        margin-top: 14px;
+        border: none;
+        /* border: 1px blue solid; */
+    }
+
+</style>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="main-c con">
+            <table>
+                <tr>
+                    <td>
+                        
+                        <select name="txtcomtype" id="txtcomtype" class="sel" required="required">
+                            <option value="">...Select...</option>
+                            {% for i in type %}
+                            <option value="{{i.id}}">{{i.comp_type_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div  style="margin-top: 10px;margin-left: 5px;">
+                            <textarea name="txtcomcon" class="con-bg" style="border-radius: 18px" required="required" id="txtcomcon" cols="52" rows="10"></textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><input type="submit" value="Send" class="send-bt"></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    {% if ins %}
+    <script>alert("Complaint Send Sucessfully...")
+    window.location='/Customer/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

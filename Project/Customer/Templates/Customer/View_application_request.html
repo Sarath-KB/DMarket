@@ -1,0 +1,74 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Application Request</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/background.jpg' %}");
+        background-size: 1540px 900px;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .table {
+        margin-top: 120px;
+        background-color: rgba(255, 255, 255, 0.616);
+        border-radius: 10px;
+        width: 1325px;
+    }
+
+    .table:hover {
+        transform: scale(0.9);
+        transition: transform 0.7s;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% if datas %}
+            <table width="900" align="center" class="table">
+                <tr>
+                    <th>#</th>
+                    <th>Event Name</th>
+                    <th>Event Description</th>
+                    <th>Event From Date</th>
+                    <th>Event To Date</th>
+                    <th>Market Name</th>
+                    <th>Status</th>
+                </tr>
+                {% for i in datas %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.event.event_name}}</td>
+                    <td width="300px" align="left">{{i.event.event_details}}</td>
+                    <td>{{i.event.event_fdate}}</td>
+                    <td>{{i.event.event_tdate}}</td>
+                    <td>{{i.event.market.mar_name}}</td>
+                    {% if i.status == '0' %}
+                    <td style="color: red;">Not Viewed</td>
+                    {% elif i.status == '1' %}
+                    <td>{{i.replay}}</td>
+                    {% elif i.status == '2' %}
+                    <td style="color: green;">Approved</td>
+                    {% elif i.status == '3' %}
+                    <td style="color: red;">Rejected</td>
+                    {% elif i.status == '4' %}
+                    <td style="color: green;">Arrived</td>
+                    {% else %}
+                    <td>Pending</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h1 style="margin-top: 250px;color: white;" align="center">No Request </h1>
+        {% endif %}
+    </form>
+</body>
+</html>
+{% endblock content %}

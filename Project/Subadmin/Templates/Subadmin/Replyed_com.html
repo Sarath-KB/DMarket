@@ -1,0 +1,102 @@
+{% extends "Subadmin/header.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replyed Complaints</title>
+</head>
+<body>
+    <form action="" method="post">
+        <div style="padding: 20px;">
+            <div class="container-fluid pt-4 px-4">
+                <h3 style="color: #009CFF;">Replayed Complaints</h3>
+                <div class="bg-light rounded h-100 p-4">
+        <table width="700" class="table table-hover">
+            <tr>
+                <th align="center" colspan="6">CUSTOMER COMPLAINT</th>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>Complaint Content</th>
+                <th>Customer</th>
+                <th>Send Date</th>
+                <th>Replyed Date</th>
+                <th>Complaint Type</th>
+            </tr>
+            {% for i in customer %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.complaint_con}}</td>
+                <td>{{i.customer.cus_name}}</td>
+                <td>{{i.sdate}}</td>
+                <td>{{i.rdate}}</td>
+                <td>{{i.com_type.comp_type_name}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+        <br><br>
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table width="700" class="table table-hover">
+            <tr>
+                <th align="center" colspan="6">MARKET COMPLAINT</th>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>Complaint Content</th>
+                <th>Market</th>
+                <th>Send Date</th>
+                <th>Replyed Date</th>
+                <th>Complaint Type</th>
+            </tr>
+            {% for i in market %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.complaint_con}}</td>
+                <td>{{i.market.mar_name}}</td>
+                <td>{{i.sdate}}</td>
+                <td>{{i.rdate}}</td>
+                <td>{{i.com_type.comp_type_name}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+        <br><br>
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table width="700" class="table table-hover">
+            <tr>
+                <th align="center" colspan="6">FARMER COMPLAINT</th>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>Complaint Content</th>
+                <th>Farmer</th>
+                <th>Send Date</th>
+                <th>Replyed Date</th>
+                <th>Complaint Type</th>
+            </tr>
+            {% for i in farmer %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.complaint_con}}</td>
+                <td>{{i.farmer.far_name}}</td>
+                <td>{{i.sdate}}</td>
+                <td>{{i.rdate}}</td>
+                <td>{{i.com_type.comp_type_name}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

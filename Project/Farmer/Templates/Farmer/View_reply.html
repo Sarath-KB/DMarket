@@ -1,0 +1,61 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reply</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+</style>
+<body>
+    <table width="700" align="center" style="margin-top: 150px;">
+        <tr>
+            <th align="center" colspan="7">COMPLAINT</th>
+        </tr>
+        <tr>
+            <th>#</th>
+            <th>Complaint Content</th>
+            <th>Farmer Name</th>
+            <th>Send Date</th>
+            <th>Type</th>
+            <th>Reply</th>
+            <th>Reply Date</th>
+        </tr>
+        {% for i in farmer %}
+        <tr align="center">
+            <td>{{forloop.counter}}</td>
+            <td>{{i.complaint_con}}</td>
+            <td>{{i.farmer.far_name}}</td>
+            <td>{{i.sdate}}</td>
+            <td>{{i.com_type.comp_type_name}}</td>
+            {% if i.replay == "" %}
+            <td style="color: red;" >N/A</td>
+            <td style="color: red;" >N/A</td>
+            {% else %}
+            <td>{{i.replay}}</td>
+            <td>{{i.rdate}}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

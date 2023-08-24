@@ -1,0 +1,67 @@
+{% extends 'Market/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reply</title>
+</head>
+<style>
+    .con {
+        margin-top: 150px;
+        /* margin-left: 450px; */
+    }
+
+    .navbar .navbar-nav .nav-link {
+    color: lime !important;
+    }
+
+    .temp-dark {
+        color: lime !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+</style>
+<body>
+    <table width="1000" align="center" class="con">
+        <tr>
+            <th align="center" colspan="7">COMPLAINT</th>
+        </tr>
+        <tr>
+            <th>#</th>
+            <th>Complaint Content</th>
+            <th>Market Name</th>
+            <th>Send Date</th>
+            <th>Type</th>
+            <th>Reply</th>
+            <th>Reply Date</th>
+        </tr>
+        {% for i in market %}
+        <tr align="center">
+            <td>{{forloop.counter}}</td>
+            <td>{{i.complaint_con}}</td>
+            <td>{{i.market.mar_name}}</td>
+            <td>{{i.sdate}}</td>
+            <td>{{i.com_type.comp_type_name}}</td>
+            {% if i.replay == "" %}
+            <td style="color: red;" >N/A</td>
+            <td style="color: red;" >N/A</td>
+            {% else %}
+            <td>{{i.replay}}</td>
+            <td>{{i.rdate}}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

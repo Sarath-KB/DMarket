@@ -1,0 +1,62 @@
+{% extends 'Subadmin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+</head>
+<style>
+    .icon-edit {
+        border: 1px black solid;
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 10px;
+        padding-bottom: 11px;
+        border-radius: 50%;
+        background-color: white;
+        color: black;
+        position: absolute;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table align="center" cellpadding="10px"> 
+            <tr>
+                <td colspan="2">
+                    <a href="{% url 'websubadmin:editpropic' %}" class="icon-edit" style="margin-top: 140px;"><i class="fas fa-pen"></i></a>
+                    <img src="{{data.sad_photo.url}}" alt="" style="border-radius: 50%;" width="200" height="200">
+                </td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{data.sad_name}}</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td>{{data.sad_contact}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{data.sad_email}}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{data.sad_address}}</td>
+            </tr>
+            <tr>
+                <td><a href="{% url 'websubadmin:editprofile' %}">Edit Profile</a></td>
+                <td><a href="{% url 'websubadmin:changepassword' %}">Change Password</a></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

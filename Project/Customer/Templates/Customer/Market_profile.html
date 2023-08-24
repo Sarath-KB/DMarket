@@ -1,0 +1,151 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Profile</title>
+</head>
+<style>
+    body{
+        background-color: rgb(236, 236, 236) !important;
+    }
+    /* body {
+        background-image: url("{% static 'Customer/img/propic.jpg' %}");
+        background-size: 1500px 900px;
+        /* background-repeat: repeat; 
+    } */
+ /* *{
+    color: black !important;
+ } */
+ .navbar .navbar-nav .nav-link {
+    color: black !important;
+ }
+
+ .navbar .navbar-nav .nav-link:hover {
+    color: #5afd90 !important;
+ }
+
+    .temp-dark {
+        color: black !important;
+    }
+
+    .temp-dark:hover {
+        color: #5afd90 !important;
+    }
+
+    .image {
+        transition: transform 0.3s ease-in-out; 
+    }
+    
+    .image:hover {
+        transform: scale(1.2);
+    }
+
+    .main {
+        padding-top: 180px;
+
+    }
+
+    .details {
+        padding-left: 40px;
+        /* padding-top: 5px; */
+    }
+
+    .profile-deatil {
+        font-size: 18px;
+    }
+
+    .profile-deatil i{
+        margin-right: 10px;
+    }
+
+    .address-details {
+        padding-top: 20px;
+        padding-left:90px ;
+    }
+
+    .button {
+        padding-left: 287px;
+        padding-right: 181px;
+    }
+
+    .d-btn-link{
+        color: black;
+    }
+
+    .d-btn{
+        width: 100%;
+    }
+
+    .d-btn:hover {
+        background-color: #5afd90 !important;
+        color: white !important;
+    }
+
+
+    .product-card {
+        
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: rgb(255, 255, 255);
+        padding: 20px;
+        background-color: white; /* Set the background color of the div */
+        box-shadow: 30px 30px 45px rgba(0, 0, 0, 0.553);
+        /* margin-right: 16px; */
+        /* margin-bottom: 39px; */
+        color: black;
+    }
+   
+    
+
+    
+</style>
+<body>
+        
+            <div class="main">
+                <div class="container product-card" style="padding-top: 50px;">
+                    <div class="row">
+                        <div class="col-3" style="padding-left: 200px;"><img src="{{mardata.marphoto.url}}" alt="" width="200" height="200" style="border-radius: 50%;" class="image"></div>
+                        <div class="col-9 details" style="    padding-left: 110px;">
+                            <div><b style="font-size: 48px;text-transform: uppercase;">{{mardata.mar_name}}</b></div>
+                            <div><p class="profile-deatil"><i class="fa fa-envelope"></i> {{mardata.mar_email}}</p></div>
+                            <div><p class="profile-deatil"><i class="fa fa-phone fa-flip-horizontal"></i> {{mardata.mar_contact}}</p></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div><p style="text-transform: capitalize;padding-left: 286px;" class="address-details"><i class="fa fa-map-marker"></i> {{mardata.mar_address}},{{mardata.place.place_name}},{{mardata.place.district.district_name}}</p></div>
+                    </div>
+                    <div class="row button">
+                        <a href="{% url 'webcustomer:marketpdt' mardata.id %}" class="d-btn-link"><button class="btn btn-lg d-btn">Show Product</button></a>
+                    </div>
+                </div>
+            </div>
+        
+
+
+        <!-- <div style="margin-top: 200px;">
+        <table width="510" align="center">
+            <tr>
+                <td width="270">
+                    <img src="{{mardata.marphoto.url}}" alt="" width="260" height="220"></td>
+                <td>
+                    <div style="border:1px solid black;">
+                    <table cellspacing="10">
+                        <tr><td>Name</td><td>{{mardata.mar_name}}</td></tr>
+                        <tr><td>Email</td><td>{{mardata.mar_email}}</td></tr>
+                        <tr><td>Contact</td><td>{{mardata.mar_contact}}</td></tr>
+                        <tr><td>Address</td><td>{{mardata.mar_address}}</td></tr>
+                        <tr><td>District</td><td>{{mardata.place.district.district_name}}</td></tr>
+                        <tr><td>Place</td><td>{{mardata.place.place_name}}</td></tr>
+                        <tr><td align="right" colspan="2"><a href="{% url 'webcustomer:marketpdt' mardata.id %}">Show Product</a></td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table> -->
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,121 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Users</title>
+</head>
+<h2 align="center" style="color: #009CFF;">Users</h2>
+<style>
+    .card-c {
+        padding: 21px 15px;
+        box-shadow: 25px 25px 15px black;
+        background-color: rgb(228, 228, 228);
+        border-radius: 10px;
+        width: 294px;
+        gap: 2rem;
+        padding-top: 70px;
+    }
+
+    .main {
+        margin-top: 150PX;
+        display: flex;
+        width: fit-content;
+        justify-content: center;
+    }
+
+    .main:hover {
+        transition: 0.5s;
+        transform: scale(1.08);
+
+    }
+
+    .img {
+        position: absolute;
+        margin-top: -117px;
+    }
+
+    .row-c {
+        gap: 4rem;
+        justify-content: center;
+    }
+
+    .space {
+        margin-top: 5px;
+        color: black;
+    }
+
+    .button-c {
+        color: white;
+        padding: 55px;
+    }
+
+    .button-c:hover {
+        color: red;
+        transition: 0.3s;
+    }
+
+    .add {
+        display: flex;
+    }
+
+    .p2 {
+        width: 150px;
+        padding-left: 25px;
+    }
+</style>
+
+<body>
+    <form action="" method="post">
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+                <div class="row row-c">
+                    {% for i in user %}
+                        <div class="col-3 main">
+                            <div><img src="{{i.cus_photo.url}}" alt="" width="190" height="190" style="border-radius: 50%; margin-left: 50px;" class="img"></div>
+                            <div class="card-c">
+                                <!-- <div><img src="{{ i.productid.pdt_image.url}}" alt="" width="190" height="190" style="border-radius: 50%; margin-left: 15px;"></div> -->
+                                <div class="add">
+                                    <div class="space">Name</div>
+                                    <div class="space p2">{{i.cus_name}}</div>
+                                </div>
+                                <div class="add">
+                                    <div class="space">Contact</div>
+                                    <div class="space" style="padding-left: 10px;">{{i.cus_contact}}</div>
+                                </div>
+                                <div class="add">
+                                    <div class="space">Email</div>
+                                    <div class="space" style="padding-left: 31px;">{{i.cus_email}}</div>
+                                </div>
+                                <div class="add">
+                                    <div class="space">Address </div> 
+                                    <div class="space" style="width: 150px; padding-left: 10px;">{{i.cus_address}}</div>
+                                </div>
+                                <div class="add">
+                                    <div class="space">District</div>
+                                    <div class="space" style="padding-left: 17px;">{{i.cus_locplace.pla.district.district_name}}</div>
+                                </div>
+                                <div class="add">
+                                    <div class="space">Place</div>
+                                    <div class="space" style="padding-left: 29px;">{{i.cus_locplace.pla.place_name}}</div>
+                                </div>
+                                <div class="add">
+                                    <div class="space">DOJ</div>
+                                    <div class="space" style="padding-left: 35px;">{{i.cus_doj}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
+{% endblock content %}

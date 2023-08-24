@@ -1,0 +1,70 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catageory</title>
+</head>
+
+<h3 align="center" style="color: #009CFF;">Add Category</h3>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+        <table align="center">
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="txtcat" id="" value="{{editdata.cat_name}}" class="form-control" required="required" autocomplete="off" pattern="[a-zA-Z ]{3}" title="Category should be minimum 3 digits" placeholder="Category">
+                        <label for="floatingInput">Category</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" class="btn btn-outline-primary m-2" value="Add" name="btnsub"></td>
+            </tr>
+        </table>
+
+        <br>
+        <br>
+            <div class="bg-light rounded h-100 p-4">
+        <table class="table table-borderedr">
+            <tr>
+                <th>Sl.no</th>
+                <th>Category Name</th>
+                <th colspan="2">Action</th>
+            </tr>
+            {% for i in cata %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.cat_name}}</td>
+                <td><a href="{% url 'webadmin:deletecategory' i.id %}">Delete</a></td>
+                <td><a href="{% url 'webadmin:editcategory' i.id %}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if catinsmsg %}
+    <script>alert('Data Inserted...')
+    window.location='/Madmin/catagory/'
+    </script>
+    {% endif %}
+    {% if dele %}
+    <script>alert('Catagory is removed..')
+    window.location='/Madmin/catagory/'
+    </script>
+    {% endif %}
+    {% if edi %}
+    <script>alert('Catagory is removed..')
+    window.location='/Madmin/catagory/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

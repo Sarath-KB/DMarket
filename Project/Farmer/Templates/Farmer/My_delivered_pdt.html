@@ -1,0 +1,162 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Product</title>
+</head>
+<style>
+     .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    .card-c {
+        padding: 21px 15px;
+        box-shadow: 30px 30px 45px rgb(63, 63, 63);
+        background-color: rgba(255, 255, 255, 0.289);
+        border-radius: 10px;
+        color: black;
+        width: fit-content;
+        padding-top: 70px;
+    }
+
+    .main {
+        margin-top: 150PX;
+        display: flex;
+        width: fit-content;
+        justify-content: center;
+    }
+
+    .main:hover {
+        transition: 0.5s;
+        transform: scale(1.07);
+
+    }
+
+    .img {
+        position: absolute;
+        margin-top: -117px;
+    }
+
+    .row-c {
+        margin-top: 127px;
+        display: flex;
+        justify-content: center;
+        color: white;
+    }
+    .space {
+        margin-top: 5px;
+        /* color: white; */
+    }
+
+    .button-c {
+        color: black;
+        padding: 55px;
+        margin-left: 25px;
+    }
+
+    .button-c:hover {
+        color: red;
+        transition: 0.3s;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% if bkdata %}
+
+
+        <div class="container">
+            <div class="row row-c">
+                {% for i in bkdata %}
+                <div class="col-3 main">
+                    <div><img src="{{ i.productid.pdt_image.url }}" alt="" width="190" height="190" style="border-radius: 50%;    margin-left: 55px;" class="img"></div>
+                    <div class="card-c">
+                        <!-- <div><img src="{{ i.productid.pdt_image.url}}" alt="" width="190" height="190" style="border-radius: 50%; margin-left: 15px;"></div> -->
+                        <div class="space">Market Name : {{i.productid.market.mar_name}}</div>
+                        <div style="display: flex;">Market Address : <div style="width: 151px;"> {{i.productid.market.mar_address}}</div></div>
+                        <div class="space">Item Name : {{i.productid.pdt_name}}</div>
+                        <div class="space">Item Quantity : {{i.mquantity}}</div>
+                        <div class="space">Item Amount : {{i.productid.pdt_rate}}</div>
+                        <div class="space">Total : {{i.mquantity|mul:i.productid.pdt_rate}}</div>
+                        <div class="space">
+                            {% if i.bookingid.booking_status == 3 %}
+                            
+                            {% else %}
+                            <div><a href="{% url 'webfarmer:deleteitemcart' i.id %}" class="button-c">Cancel Booking</a></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div align="right" style="margin-right: 50px;"><a href="{% url 'webfarmer:deliveredbills' bookid %}"><b
+                            style="font-size: 25px;padding: 15px;color: #3866a9;">Bills</b></a></div>
+            </div>
+        </div>
+
+
+
+        <!-- <table align="center">
+            <tr>
+                {% for i in bkdata %}
+                <td>
+                    <div style="border:1px solid black;margin:20px;padding:20px">
+                    <img src="{{ i.productid.pdt_image.url }}" alt="" width="220" height="200"><br>
+                    <table width="220" cellspacing="10px">
+                        <tr>
+                            <td>Item Name</td>
+                            <td>{{i.productid.pdt_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Quantity</td>
+                            <td>{{i.mquantity}}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Amount</td>
+                            <td>{{i.productid.pdt_rate}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Amount</td>   
+                            <td>{{i.mquantity|mul:i.productid.pdt_rate}}</td>
+                        </tr>
+                        <tr>
+                            {% if i.bookingid.booking_status == 3 %}
+                            <td></td>
+                            {% else %}
+                            <td align="center" colspan="2"><a href="{% url 'webfarmer:deleteitemcart' i.id %}">Cancel Booking</a></td>
+                            {% endif %}
+                        </tr>
+                    </table>
+                </td>
+                {% if forloop.counter|divisibleby:3 %}
+                </tr>
+                <tr>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                
+                <td align="right" colspan="3"><a href="{% url 'webfarmer:bills' bookid %}"><b style="font-size: 25px;padding: 15px;" >Bills</b></a></td>
+                
+            </tr>
+        </table> -->
+        {% else %}
+        <h2 align="center" style="color: red;">No Products</h2>
+        {% endif %}
+    </form>
+</body>
+</html>
+{% endblock content %}

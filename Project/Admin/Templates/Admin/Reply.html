@@ -1,0 +1,59 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reply</title>
+</head>
+
+<h3 align="center" style="color: #009CFF;">Reply</h3>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table cellspacing="10" align="center">
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="twext" name="replyto" readonly value="{{data.subadmin.sad_name}}" id="" aria-readonly="true" class="form-control" placeholder="replyto">  
+                        <label for="floatingInput">Reply to</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="twext" name="content" readonly value="{{data.complaint_con}}" aria-readonly="true" id="" class="form-control" placeholder="content">  
+                        <label for="floatingInput">Content</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating">
+                        <textarea name="txtreply" id="" class="form-control" placeholder="reply"
+                    id="floatingTextarea" style="height: 250px;width: 300px;" required="required" autocomplete="off"></textarea>
+                        <label for="floatingTextarea">Enter your replys...</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right"><input class="btn btn-outline-primary m-2" type="submit" value="Send"></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if se %}
+    <script>alert("Reply Send Sucessully..")
+    window.location='/Madmin/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

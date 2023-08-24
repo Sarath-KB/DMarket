@@ -1,0 +1,167 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Product</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #00ff00 !important;
+    }
+
+    .temp-dark {
+        color: #00ff00 !important;
+    }
+    .cart-btn {
+        background: black;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .card:hover {
+        box-shadow: 0px 0px 30px rgb(5, 5, 5);
+        transition: transform  0.5s; 
+        transform: scale(1.05);
+    }
+</style>
+<body>
+    <form action="" method="post" id="marketproductform" data-place-url="{% url 'webfarmer:ajaxsubcat' %}"  data-market-url="{% url 'webfarmer:ajaxmarketproduct' %}">
+        <table align="center" style="margin-top: 130px;">
+            <tr><td>Category</td>
+                <td>
+                    <select name="selcat" id="selcat" class="selectbox">
+                        <option value="">...Select...</option>
+                        {% for i in cat %}
+                        <option value="{{i.id}}">{{i.cat_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>Sub Catageory</td>
+                <td>
+                    <select name="selsubcat" id="selsubcat" class="selectbox">
+                        <option value="">...Select...</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <br>
+
+        <table id="result" align="center">
+            <tr>
+                {% for i in mdata %}
+                <td>
+                    <div style="border:1px solid black;margin:20px;padding:10px;border-radius: 10%;" class="card">
+                    <span style="margin-left: 40px;"><img src="{{i.pdt_image.url}}" style="border-radius: 10%;" alt="" width="200" height="150"></span><br>
+                    <table width="290" style="color: black;">
+                        <tr><td>Name</td><td>{{i.pdt_name}}</td></tr>
+                        <tr><td>Rate</td><td>{{i.pdt_rate}}</td></tr>
+                        <tr><td>Stock</td>
+                        {% if i.pdt_stock <= 0 %}
+                        <td style="color:red">Out Of Stock</td>
+                        {% else %}
+                        <td>{{i.pdt_stock}}</td>
+                        {% endif %}
+                        </tr>
+                        <tr><td>Catageory</td><td>{{i.subcategory.cat.cat_name}}</td></tr>
+                        <tr><td>Sub Catagory</td><td>{{i.subcategory.subcat_name}}</td></tr>
+                        <tr><td>Discription</td><td>{{i.pdt_dis}}</td></tr>
+                        <tr><td colspan="2" align="center" class="cart-btn"><a href="{% url 'webfarmer:marketcart' i.id %}">Add To Cart</a></td></tr>
+                    </table>
+                </td>
+                {% if forloop.counter|divisibleby:4 %}
+                </tr>
+                <tr>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+
+
+        <!-- <table id="result" align="center">
+            <tr>
+                {% for i in mdata %}
+                <td>
+                    <div style="border:1px solid black;margin:20px;padding:10px">
+                    <img src="{{i.pdt_image.url}}" alt="" width="200" height="150"><br>
+                    <table width="290">
+                        <tr><td>Name</td><td>{{i.pdt_name}}</td></tr>
+                        <tr><td>Rate</td><td>{{i.pdt_rate}}</td></tr>
+                        <tr><td>Stock</td>
+                        {% if i.pdt_stock <= 0 %}
+                        <td style="color:red">Out Of Stock</td>
+                        {% else %}
+                        <td>{{i.pdt_stock}}</td>
+                        {% endif %}
+                        </tr>
+                        <tr><td>Catageory</td><td>{{i.subcategory.cat.cat_name}}</td></tr>
+                        <tr><td>Sub Catagory</td><td>{{i.subcategory.subcat_name}}</td></tr>
+                        <tr><td>Discription</td><td>{{i.pdt_dis}}</td></tr>
+                        <tr><td colspan="2" align="right"><a href="{% url 'webfarmer:marketcart' i.id %}">Add To Cart</a></td></tr>
+                    </table>
+                </td>
+                {% if forloop.counter|divisibleby:4 %}
+                </tr>
+                <tr>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table> -->
+    </form>
+    {% if error %}
+    <script>alert('Product Already Added to Cart..')
+    window.location="/Farmer/home/"
+    </script>
+    {% endif %}
+    {% if ins %}
+    <script>alert('Product Added to Cart...')
+    window.location="/Farmer/home/"
+    </script>
+    {% endif %}
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#selcat").change(function () {
+        var cat = $(this).val();
+        var sub = document.getElementById("selsubcat").value;
+        var ur = $("#marketproductform").attr("data-place-url");
+        $.ajax({
+            url: ur,
+            data: { disd: cat, },
+            success: function (data) {
+                $("#selsubcat").html(data);
+
+                var ur = $("#marketproductform").attr("data-market-url");
+                $.ajax({
+                    url: ur,
+                    data: { sub: sub,cat: cat },
+                    success: function (data) {
+                        $("#result").html(data);
+                    },
+                });
+            },
+        });
+    });
+
+    $("#selsubcat").change(function () {
+        var sub = $(this).val();
+        var cat = document.getElementById('selcat').value;
+        var ur = $("#marketproductform").attr("data-market-url");
+        $.ajax({
+            url: ur,
+            data: { sub: sub,cat: cat },
+            success: function (data) {
+                $("#result").html(data);
+            },
+        });
+    });
+
+
+    </script>
+    {% endblock content %}

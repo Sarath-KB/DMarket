@@ -1,0 +1,161 @@
+{% extends 'Market/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Reject Application</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: lime !important;
+    }
+
+    .temp-dark {
+        color: lime !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    .bt {
+        padding: 10px;
+        background-color: lime;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        color: white;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% if customerapp and farmerapp %}
+        <table style="margin-top: 130px;">
+            <tr>
+                <td>
+                    <div style="border: 1px solid black;">
+                    <table width="500" cellpadding="10px">
+                        <tr>
+                            <th colspan="5">Customer Application</th>
+                        </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Customer Name</th>
+                            <th>Customer Contact</th>
+                            <th>Event Name</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                        {% for i in customerapp %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.customer.cus_name}}</td>
+                            <td>{{i.customer.cus_contact}}</td>
+                            <td>{{i.event.event_name}}</td>
+                            <td><a href="{% url 'webmarket:customerapprove' i.id %}"><div class="bt">Approve</div></a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+                <td>
+                    <div style="border: 1px solid black">
+                    <table width="500" cellpadding="10px">
+                        <tr>
+                            <th colspan="5">Farmer Application</th>
+                        </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Farmer Name</th>
+                            <th>Farmer Contact</th>
+                            <th>Event Name</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                        {% for j in farmerapp %}
+                        <tr align="center">
+                            <td>{{forloop.counter}}</td>
+                            <td>{{j.farmer.far_name}}</td>
+                            <td>{{j.farmer.far_contact}}</td>
+                            <td>{{j.event.event_name}}</td>
+                            <td><a href="{% url 'webmarket:farmerapprove' j.id %}"><div class="bt">Approve</div></a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
+        {% elif customerapp %}
+            <table align="center" style="margin-top: 130px;">
+                <tr>
+                    <td>
+                        <div style="border: 1px solid black">
+                        <table width="500" cellpadding="10px">
+                            <tr>
+                                <th colspan="5">Customer Application</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Customer Name</th>
+                                <th>Customer Contact</th>
+                                <th>Event Name</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                            {% for i in customerapp %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.customer.cus_name}}</td>
+                                <td>{{i.customer.cus_contact}}</td>
+                                <td>{{i.event.event_name}}</td>
+                                <td><a href="{% url 'webmarket:customerapprove' i.id %}"><div class="bt">Approve</div></a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        {% elif farmerapp %}
+            
+                <table align="center" style="margin-top: 130px;">
+                    <tr>
+                        <td>
+                            <div style="border: 1px solid black;padding: 10px;">
+                            <table width="800" cellpadding="10px">
+                                <tr>
+                                    <th colspan="5">Farmer Application</th>
+                                </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Farmer Name</th>
+                                    <th>Farmer Contact</th>
+                                    <th>Event Name</th>
+                                    <th colspan="2">Action</th>
+                                </tr>
+                                {% for j in farmerapp %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{j.farmer.far_name}}</td>
+                                    <td>{{j.farmer.far_contact}}</td>
+                                    <td>{{j.event.event_name}}</td>
+                                    <td><a href="{% url 'webmarket:farmerapprove' j.id %}"><div class="bt">Approve</div></a></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+        {% else %}
+        <h2 align="center" style="color: red; margin-top: 150px;">No Rejected Applications</h2>
+        {% endif %} 
+    </form>
+    {% if approve %}
+    <script>alert("Event Application Approved....!!")
+    window.location='/Market/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

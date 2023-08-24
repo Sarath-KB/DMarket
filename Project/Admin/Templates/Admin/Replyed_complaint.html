@@ -1,0 +1,42 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replyed Complaint</title>
+</head>
+<h3 align="center" style="color: #009CFF;">Replyed Complaint</h3>
+<body>
+    <form action="" method="post">
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table width="700" class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Complaint Content</th>
+                <th>Sub Admin</th>
+                <th>District</th>
+                <th>Send Date</th>
+                <th>Reply Date</th>
+            </tr>
+            <tr>
+                {% for i in subad %}
+                <td>{{forloop.counter}}</td>
+                <td>{{i.complaint_con}}</td>
+                <td>{{i.subadmin.sad_name}}</td>
+                <td>{{i.subadmin.district.district_name}}</td>
+                <td>{{i.sdate}}</td>
+                <td>{{i.rdate}}</td>
+                {% endfor %}
+            </tr>
+        </table>
+        </div>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

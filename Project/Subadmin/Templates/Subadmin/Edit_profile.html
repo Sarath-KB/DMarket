@@ -1,0 +1,65 @@
+{% extends 'Subadmin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table align="center"> 
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="txtname" id="" value="{{prodata.sad_name}}" class="form-control" placeholder="name" required="required"> 
+                        <label for="floatingInput">Name</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="txtcon" id="" value="{{prodata.sad_contact}}" class="form-control" placeholder="contact" required="required"> 
+                        <label for="floatingInput">Name</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="email" name="txtemail" id="" value="{{prodata.sad_email}}" class="form-control" placeholder="email" required="required"> 
+                        <label for="floatingInput">Name</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating">
+                        <textarea name="txtaddress" id="" class="form-control" placeholder="Complaint"
+                    id="floatingTextarea" style="height: 250px;width: 300px;" placeholder="addresss" required="required">{{prodata.sad_address}}</textarea>
+                        <label for="floatingTextarea">Address</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" class="btn btn-outline-primary m-2" value="Update" name="btnsub"></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if ep %}
+    <script>alert('Profile Updated...')
+    window.location='/Subadmin/My_profile/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

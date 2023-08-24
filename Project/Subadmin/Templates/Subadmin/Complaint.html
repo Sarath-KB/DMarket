@@ -1,0 +1,55 @@
+{% extends 'Subadmin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+            <h3 style="color: #009CFF;">Send Complaints</h3>
+            <div class="bg-light rounded h-100 p-4">
+        <table align="center">
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <select name="txtcomtype" id="txtcomtype" class="form-select" id="floatingSelect" aria-label="Floating label select example" required="required">
+                            <option value="">...Select...</option>
+                            {% for i in type %}
+                            <option value="{{i.id}}">{{i.comp_type_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="floatingSelect">Complaint Type</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating">
+                        <textarea name="txtcomcon" id="txtcomcon" class="form-control" required="required" autocomplete="off"
+                    id="floatingTextarea" style="height: 250px;width: 300px;" placeholder="Enter your complaints..."></textarea>
+                        <label for="floatingTextarea">Enter your complaints...</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><input type="submit" class="btn btn-outline-primary m-2" value="Send"></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if ins %}
+    <script>alert("Complaint Send Sucessfully...")
+    window.location='/Subadmin/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

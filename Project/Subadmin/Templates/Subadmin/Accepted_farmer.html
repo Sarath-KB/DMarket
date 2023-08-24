@@ -1,0 +1,50 @@
+{% extends 'Subadmin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accepted Farmer</title>
+</head>
+<body>
+    <form action="" method="post">
+        <div class="container-fluid pt-4 px-4">
+            <h3 style="color: #009CFF;">Approved Farmer</h3>
+            <div class="bg-light rounded h-100 p-4">
+        <table width="1200" class="table table-hover">
+            <tr align="left">
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Photo</th>
+                <th>Proof</th>
+                <th>DOJ</th>
+                <th>Farm type</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+            {% for i in farmer %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.far_name}}</td>
+                <td>{{i.far_email}}</td>
+                <td>{{i.far_contact}}</td>
+                <td>{{i.far_address}}</td>
+                <td><img src="{{i.far_photo.url}}" alt="" width="60" height="80"></td>
+                <td><img src="{{i.far_proof.url}}" alt="" width="60" height="80"></td>
+                <td>{{i.far_doj}}</td>
+                <td>{{i.farmer_type.farm_type}}</td>
+                <td>{{i.locplace.pla.district.district_name}}<br>{{i.locplace.pla.place_name}}<br>{{i.locplace.loc_place_name}}</td>
+                <td><a href="{% url 'websubadmin:rejectfarmer' i.id %}">Reject</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+{% endblock content %}

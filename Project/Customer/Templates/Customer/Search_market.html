@@ -1,0 +1,181 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Market</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/background.jpg' %}");
+        background-size: 1540px 900px;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .far-card {
+        background-color: rgba(255, 255, 255, 0.455);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 40px 40px 70px rgb(0, 0, 0);
+    }
+
+    .far-card:hover {
+        transition: transform 0.5s;
+        transform: scale(0.9);
+    }
+
+    .search-area {
+        margin-top: 100px;
+    }
+
+    .link {
+        padding: 5px;
+        color: black;
+        background: none;
+        border: none;
+        border-radius: 5px;
+        padding-left: 27px;
+        padding-right: 31px;
+    }
+
+    .let-color {
+        color: black;
+    }
+
+    .scontainer {
+        margin: 0 20px;
+    }
+</style>
+
+<body>
+    <form action="" method="post" id="searchmarket" data-place-url="{% url 'webadmin:ajaxplace'%}"
+        data-market-url="{% url 'webcustomer:ajaxmarket' %}">
+        <div class="d-profile">
+            <table align="center" class="d-card" style="color: white;margin-top: 120px;">
+                <tr>
+                    <td>District</td>
+                    <td>
+                        <select name="seldis" id="seldis" class="selectbox">
+                            <option>...Select...</option>
+                            {% for i in dis %}
+                            <option value="{{i.id}}">{{i.district_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>Place</td>
+                    <td>
+                        <select name="selplace" id="selplace" class="selectbox">
+                            <option value="">...Select...</option>
+                        </select>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </form>
+    <br>
+
+    <div class="container">
+        <div class="row" id="result" style="gap:4rem; justify-content: center;">
+            {% for i in mar %}
+            <div class="col-3 far-card">
+                <div style="text-align:center;border:1px solid white;padding:20px;color: white;">
+                    <div><img src="{{i.marphoto.url}}" alt="" width="140" style="border-radius: 10px;" height="140">
+                    </div>
+                    <div>{{i.mar_name}}</div>
+                    <div>{{i.mar_contact}}</div>
+                    <div>{{i.mar_email}}</div>
+                    <div><a href="{% url 'webcustomer:marketpro' i.id %}"><button class="link">Show More</button></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+    <!-- <div class="d-profile " id="result">
+        {% for i in mar %}
+        <div class="col-3 d-card" style="margin-left: 15px;">
+            <div style="text-align:center;border:1px solid white;padding:20px;color: white;">
+                <img src="{{i.marphoto.url}}" alt="" width="140" height="140" style="border-radius: 50%;"><br>
+                    {{i.mar_name}}<br>
+                    {{i.mar_contact}}<br>
+                    {{i.mar_email}}
+                    <p align="right"><a href="{% url 'webcustomer:marketpro' i.id %}">Show More</a></p>
+            </div>
+        </div>
+        {% endfor %} -->
+
+
+    <!-- <table cellspacing="60" align="center" id="result" class="d-card">
+        <tr>
+        {% for i in mar %}
+            <td>
+                <div style="text-align:center;border:1px solid white;margin:22px;padding:20px;color: white;">
+                    <img src="{{i.marphoto.url}}" alt="" width="140" height="140"><br>
+                        {{i.mar_name}}<br>
+                        {{i.mar_contact}}<br>
+                        {{i.mar_email}}
+                        <p align="right"><a href="{% url 'webcustomer:marketpro' i.id %}">Show More</a></p>
+                </div>
+            </td>
+            {% if forloop.counter|divisibleby:4 %}
+        </tr>
+        <tr>
+            {% endif %}
+        {% endfor %}
+    </table> -->
+    </div>
+</body>
+
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#seldis").change(function () {
+        var did = $(this).val();
+        var pid = document.getElementById("selplace").value;
+        var ur = $("#searchmarket").attr("data-place-url");
+        $.ajax({
+            url: ur,
+            data: { disd: did, },
+            success: function (data) {
+                $("#selplace").html(data);
+
+                var ur = $("#searchmarket").attr("data-market-url");
+                $.ajax({
+                    url: ur,
+                    data: { did: did, pid: pid },
+                    success: function (data) {
+                        $("#result").html(data);
+                    },
+                });
+            },
+        });
+    });
+
+
+
+    $("#selplace").change(function () {
+        var pid = $(this).val();
+        var did = document.getElementById("seldis").value;
+        var ur = $("#searchmarket").attr("data-market-url");
+        $.ajax({
+            url: ur,
+            data: { did: did, pid: pid },
+            success: function (data) {
+                $("#result").html(data);
+            },
+        });
+    });
+</script>
+{% endblock content %}

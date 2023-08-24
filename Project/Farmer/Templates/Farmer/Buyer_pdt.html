@@ -1,0 +1,63 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Productd</title>
+</head>
+<style>
+    body {
+        background-color: rgb(230, 234, 237);
+    }
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    .ma {
+        margin-top: 130px;
+        margin-left: 650px;
+        padding: 20px;
+        border-radius: 20px;
+        background-color: white;
+        width: fit-content;
+    }
+</style>
+<body>
+    <div class="ma">
+        <table cellpadding="10px">
+            {% for i in product %}
+            <tr>
+                <td colspan="2"><img src="{{i.productid.pdt_image.url}}" style="border-radius: 30%;" width="200" height="200" alt=""></td>
+            </tr>
+            <tr>
+                <td>Item Name</td>
+                <td>{{i.productid.pdt_name}}</td>
+            </tr>
+            <tr>
+                <td>Item Rate</td>
+                <td>{{i.fquantity|mul:i.productid.pdt_rate}}</td>
+            </tr>
+            <tr>
+                <td>Item Quantity</td>
+                <td>{{i.fquantity}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,141 @@
+{% extends 'Market/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+</head>
+<style>
+    body {
+        background-color: rgb(229, 229, 229);
+    }
+
+    .navbar .navbar-nav .nav-link {
+    color: black !important;
+    }
+
+    .temp-dark {
+        color: black !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: lime !important;
+    }
+
+    .temp-dark:hover {
+        color: lime !important;
+    }
+
+    .card {
+        margin-top: 140px;
+        margin-left: 600px;
+        background-color: white;
+        align-items: center;
+        box-shadow: 0 0 20px black;
+        width: fit-content;
+        padding: 30px;
+        color: black;
+        border-radius: 18px;
+    }
+
+    .con {
+        display: flex;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .link-k {
+        background-color: lime;
+        border-radius: 10px;
+        width: 310px;
+        padding: 11px;
+        /* align-items: center; */
+        justify-content: center;
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .link-k:hover {
+        background-color: rgb(0, 218, 0);
+        color: white;
+    }
+
+    .camera-icon {
+        top: 30%;
+        left: 60%;
+        position: absolute;
+        color: white;
+        background-color: rgb(87, 87, 87);
+    }
+
+    .camera-icon:hover {
+        color: rgb(0, 0, 0);
+        background-color: white;
+        border: none;
+        transition: 0.3s;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        <div class="card">
+            <div><img src="{{data.marphoto.url}}" alt="" width="200" height="200" style="border-radius: 50%;">
+                <a href="{% url 'webmarket:editpropic' %}">
+                    <div class="btn btn-lg-square camera-icon border-light rounded-circle">
+                        <i class="fas fa-pen pen-icon"></i>
+                    </div>
+                </a>
+            </div>
+            <table class="con" cellpadding="10px">
+                <tr>
+                    <td>Name</td>
+                    <td>{{data.mar_name}}</td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td>{{data.mar_contact}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{data.mar_email}}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td style="width: 120px;">{{data.mar_address}}</td>
+                </tr>
+            </table>
+            <div><a href="{% url 'webmarket:editprofile' %}"><span class="link-k">Edit Profile</span></a></div>
+            <div><a href="{% url 'webmarket:changepassword' %}"><span class="link-k">Change Password</span></a></div>
+        </div>
+        <!-- <table> 
+            <tr>
+                <td colspan="2"><img src="{{data.marphoto.url}}" alt="" width="200" height="200"></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{data.mar_name}}</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td>{{data.mar_contact}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{data.mar_email}}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{data.mar_address}}</td>
+            </tr>
+            <tr>
+                <td><a href="{% url 'webmarket:editprofile' %}">Edit Profile</a></td>
+                <td><a href="{% url 'webmarket:changepassword' %}">Change Password</a></td>
+            </tr>
+        </table> -->
+    </form>
+</body>
+</html>
+{% endblock content %}

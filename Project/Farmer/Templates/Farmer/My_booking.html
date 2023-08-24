@@ -1,0 +1,89 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Booking</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+
+    .main-c {
+        margin-top: 150px;
+        margin-left: 360px;
+    }
+    .bt {
+        padding: 10px;
+        background-color: #3866a9;
+        border-radius: 10px;
+        border: none;
+    }
+    .bt:hover {
+        background-color: limegreen;
+    }
+
+    tr:hover {
+        background-color: rgb(205, 205, 205);
+        transition: 0.5s;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% if book %}
+            <table width="900" cellpadding="20px" class="main-c">
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            
+                {% for i,j,c in book %}
+        
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.booking_date }}</td>
+                    <!-- <td>{{ c.productid.market.mar_name }}</td> -->
+                    <td>D MARKET</td>
+                    <td>
+                    {{j}}
+                    </td>
+                    {% if i.booking_status == 1 %}
+                        <td style="color: green;">Payed</td>
+                    {% elif i.booking_status == 2 %}
+                        <td style="color: red;">Cash On Delivery</td>
+                    {% else %}
+                        <td style="color: lime;">Delivered</td>
+                    {% endif %}
+                    <td><a href="{% url 'webfarmer:myproduct' i.id %}" class="bt" style="color: white;">View Product</a></td>
+                </tr>
+            
+                {% endfor %}
+            
+            </table>
+        {% else %}
+            <h2 style="color: red; margin-top: 130px;" align="center">No Data</h2>
+        {% endif %}
+    </form>
+</body>
+</html>
+{% endblock content %}

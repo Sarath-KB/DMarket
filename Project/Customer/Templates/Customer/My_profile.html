@@ -1,0 +1,79 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/BG-Image1.jpg' %}");
+    }
+
+    
+    .camera-icon {
+        top: 38%;
+        left: 53%;
+        position: absolute;
+        color: white;
+        background-color: rgb(87, 87, 87);
+    }
+
+    .camera-icon:hover {
+        color: rgb(0, 0, 0);
+    }
+</style>
+
+<body>
+    <div class="container-fluid d-bg-image">
+        <div class="d-profile">
+            <table align="center" style="color: black;" cellpadding="10px" class="d-card">
+                <tr>
+                    <td colspan="2" align="center"><img src="{{data.cus_photo.url}}" alt="" width="200" height="200"
+                            style="border-radius: 50%;">
+                            <a href="{% url 'webcustomer:editpropic' %}">
+                                <div class="btn btn-lg-square camera-icon border-light rounded-circle">
+                                    <i class="fas fa-pen pen-icon"></i>
+                                </div>
+                            </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{data.cus_name}}</td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td>{{data.cus_contact}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{data.cus_email}}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>{{data.cus_address}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><a class="d-card-button" href="{% url 'webcustomer:editprofile' %}">Edit Profile</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <a class="d-card-button" href="{% url 'webcustomer:changepassword' %}">Change password</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+
+    </div>
+</body>
+
+</html>
+{% endblock content %}

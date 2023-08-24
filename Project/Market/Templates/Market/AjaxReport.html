@@ -1,0 +1,138 @@
+{% if farmer and customer %}
+<table>
+    <tr>
+        <td>
+            <div style="border:1px solid black;margin:10px;padding:5px;margin-top: 50px;">
+            <table width="700" cellpadding="10px">
+                <tr>
+                    <th colspan="5">Farmer Booking</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Farmer name</th>
+                    <th>Booking Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                {% for i,j in farmer %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.farmer.far_name}}</td>
+                    {% if i.bookingid.booking_status == 1 %}
+                    <td>{{i.mpayment_date}}</td>
+                    {% else %}
+                    <td>{{i.booking_date}}</td>
+                    {% endif %}  
+                    <td>{{j}}</td>
+                    <td style="color: green;">Delivered</td>
+                    <td><a href="{% url 'webmarket:viewbuyersdeliverypdt' i.id %}" class="but">Product</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+        <td>
+            <div style="border:1px solid black;margin:10px;padding:5px;margin-top: 50px;">
+            <table width="700" cellpadding="10px">
+                <tr>
+                    <th colspan="7">Customer Booking</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Customer name</th>
+                    <th>Booking Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                {% for i,j in customer %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.user.cus_name}}</td>
+                    {% if i.bookingid.booking_status == 1 %}
+                    <td>{{i.mpayment_date}}</td>
+                    {% else %}
+                    <td>{{i.booking_date}}</td>
+                    {% endif %}  
+                    <td>{{j}}</td>
+                    <td style="color: green;">Delivered</td>
+                    <td><a href="{% url 'webmarket:viewcustomerdeliveredpdt' i.id %}" class="but">Products</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+</table>
+{% elif farmer %}
+<table  align="center">
+    <tr>
+        <td>
+            <div style="border:1px solid black;margin:10px;padding:10px;margin-top: 50px;">
+            <table width="700" cellpadding="10px">
+                <tr>
+                    <th colspan="5">Farmer Booking</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Farmer name</th>
+                    <th>Booking Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                {% for i,j in farmer %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.farmer.far_name}}</td>
+                    {% if i.bookingid.booking_status == 1 %}
+                    <td>{{i.mpayment_date}}</td>
+                    {% else %}
+                    <td>{{i.booking_date}}</td>
+                    {% endif %}  
+                    <td>{{j}}</td>
+                    <td style="color: green;">Delivered</td>
+                    <td><a href="{% url 'webmarket:viewbuyersdeliverypdt' i.id %}" class="but">Product</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+</table>
+{% elif customer %}
+<table align="center">
+    <tr>
+        <td>
+            <div style="border:1px solid black;margin:10px;padding:10px; margin-top: 50px;">
+            <table width="700"  cellpadding="10px">
+                <tr>
+                    <th colspan="7">Customer Booking</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Customer name</th>
+                    <th>Booking Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                {% for i,j in customer %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.user.cus_name}}</td>
+                    {% if i.bookingid.booking_status == 1 %}
+                    <td>{{i.mpayment_date}}</td>
+                    {% else %}
+                    <td>{{i.booking_date}}</td>
+                    {% endif %} 
+                    <td>{{j}}</td>
+                    <td style="color: green;">Delivered</td>
+                    <td><a href="{% url 'webmarket:viewcustomerdeliveredpdt' i.id %}" class="but">Products</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+</table>
+{% else %}
+<h2 style="color: red; margin-top: 150px; margin-left: 700px;" >No Products</h2>
+{% endif %}

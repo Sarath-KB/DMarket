@@ -1,0 +1,73 @@
+<style>
+    .pdt-card{
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 30px;
+        width: 335px;
+        margin-left: 20px;
+    }
+
+    .pdt-card:hover {
+        box-shadow: 0px 0px 30px rgb(5, 5, 5);
+        transition: transform  0.3s ease-in-out; 
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="container">
+    <div class="row" style="    gap: 4rem;    justify-content: center;" id="result">
+        {% for i in mdata %}
+            <div class="col-4 pdt-card">
+                <div>
+                    <div class="image"><img src="{{i.pdt_image.url}}" width="200" height="200" alt=""></div>
+                    <div class="item" style="margin-top: 10px;"><div style="margin-right: 62px;">Name </div><div> {{i.pdt_name}}</div></div>
+                    <div class="item"><div style="margin-right: 72px;">Rate</div><div>{{i.pdt_rate}}</div></div>
+                    <div class="item">
+                        <div style="margin-right: 62px;">Stock</div>
+                        <div>
+                            {% if i.pdt_stock <= 0 %}
+                            <div style="color:red">Out Of Stock</div>
+                            {% else %}
+                            <div>{{i.pdt_stock}}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="item"><div style="margin-right: 40px;">Category</div><div>{{i.subcategory.cat.cat_name}}</div></div>
+                    <div class="item"><div style="margin-right: 8px;">Sub Catagory</div><div>{{i.subcategory.subcat_name}}</div></div>
+                    <div class="item"><div style="margin-right: 30px;">Discription</div><div>{{i.pdt_dis}}</div></div>
+                    <div class="item cart-btn"><a href="{% url 'webcustomer:marketcart' i.id %}">Add To Cart</a></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- <table id="result" align="center">
+    <tr>
+        {% for i in mdata %}
+        <td>
+            <div style="border:1px solid black;margin:20px;padding:10px;border-radius: 10%;" class="card">
+                <span style="margin-left: 40px;"><img src="{{i.pdt_image.url}}" style="border-radius: 10%;" alt="" width="200" height="150"></span><br>
+                <table width="290" style="color: black;">
+                    <tr><td>Name</td><td>{{i.pdt_name}}</td></tr>
+                    <tr><td>Rate</td><td>{{i.pdt_rate}}</td></tr>
+                    <tr><td>Stock</td>
+                    {% if i.pdt_stock <= 0 %}
+                    <td style="color:red">Out Of Stock</td>
+                    {% else %}
+                    <td>{{i.pdt_stock}}</td>
+                    {% endif %}
+                    </tr>
+                    <tr><td>Catageory</td><td>{{i.subcategory.cat.cat_name}}</td></tr>
+                    <tr><td>Sub Catagory</td><td>{{i.subcategory.subcat_name}}</td></tr>
+                    <tr><td>Discription</td><td>{{i.pdt_dis}}</td></tr>
+                    <tr><td colspan="2" align="center" class="cart-btn"><a href="{% url 'webcustomer:marketcart' i.id %}">Add To Cart</a></td></tr>
+                </table>
+        </td>
+        {% if forloop.counter|divisibleby:4 %}
+        </tr>
+        <tr>
+            {% endif %}
+        {% endfor %}
+    </tr>
+</table> -->

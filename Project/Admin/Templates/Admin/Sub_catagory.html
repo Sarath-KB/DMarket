@@ -1,0 +1,86 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub Category</title>
+</head>
+<h3 align="center" style="color: #009CFF;">Sub Category</h3>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+        <table align="center">
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <select name="selcat" class="form-select" id="floatingSelect" required="required" aria-label="Floating label select example">
+                            <option value="">...Select...</option>
+                            {% for i in catdata %}
+                            <option
+                            {% if sdata.cat.id == i.id %}
+                                selected
+                            {% endif %}
+                            value="{{i.id}}">{{i.cat_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="floatingSelect">Category</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="txtsubcat" id="" value="{{sdata.subcat_name}}" required="required" autocomplete="off" pattern="[a-zA-Z]{4,15}" title="Sub Category should be minimum 4 letters" class="form-control" placeholder="Subcat">
+                        <label for="floatingInput">Sub Category</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input class="btn btn-outline-primary m-2" type="submit" value="Save" name="btnsub"></td>
+            </tr>
+        </table>
+        <br><br>
+            <div class="bg-light rounded h-100 p-4">
+        <table width="400" class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th colspan="2" align="center">Action</th>
+            </tr>
+            {% for i in subcat%}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.cat.cat_name}}</td>
+                <td>{{i.subcat_name}}</td>
+                <td><a href="{% url 'webadmin:editsubcat' i.id %}">Edit</a></td>
+                <td><a href="{% url 'webadmin:deletesubcat' i.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if subcatinsmsg %}
+    <script>alert('Data Inserted....')
+    window.location='/Madmin/sub_catagory/'
+    </script>
+    {% endif %}
+    {% if ed %}
+    <script>alert('Data Updated...')
+    window.location='/Madmin/sub_catagory/'
+    </script>
+    {% endif %}
+    {% if de %}
+    <script>alert('Data Deleted...')
+    window.location='/Madmin/sub_catagory/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

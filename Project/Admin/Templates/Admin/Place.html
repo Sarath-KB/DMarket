@@ -1,0 +1,85 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLace</title>
+</head>
+
+<h3 align="center" style="color: #009CFF;">Add Place</h3>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+        <table align="center">
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <select name="seldis" class="form-select" aria-label="Floating label select example" required="required" id="floatingSelect">
+                            <option value="">...Select...</option>
+                            {% for i in district %}
+                      
+                            <option      
+                             {% if data.district.id == i.id  %}
+                                selected
+                            {% endif %} 
+                            value="{{i.id}}">{{i.district_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="floatingSelect">District</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="txtplace" id="" value="{{data.place_name}}" class="form-control" required="required" autocomplete="off" pattern="[a-zA-Z]{4}" title="Place should be minimum 4 letters" placeholder="Place">
+                        <label for="floatingInput">Place</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"> <input type="submit" class="btn btn-outline-primary m-2" value="Save" name="btnsub"> <input class="btn btn-outline-primary m-2" type="reset" value="Cancel" name="btncancel"></td>
+            </tr>
+        </table>
+        <br><br>
+        <div class="bg-light rounded h-100 p-4">
+        <table class="table table-hover">
+            <tr>
+                <th>Sl.No</th>
+                <th>District</th>
+                <th>Place</th>
+                <th>Action</th>
+            </tr>
+            {% for i in place %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.district.district_name}}</td>
+                <td>{{i.place_name}}</td>
+                <td><a href="{% url 'webadmin:deleteplace' i.id %}">Delete</a> <a href="{% url 'webadmin:editplace' i.id %}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if plainsmsg %}
+    <script>alert('Data Inserted....')</script>
+    {% endif %}
+    {% if up %}
+    <script>alert('Data Updated..')
+    window.location='/Madmin/place/';
+    </script>
+    {% endif %}
+    {% if de %}
+    <script>alert('Data Updated..')
+    window.location='/Madmin/place/';
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

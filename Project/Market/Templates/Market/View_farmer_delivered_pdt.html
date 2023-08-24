@@ -1,0 +1,115 @@
+{% extends 'Market/header.html' %}
+{% load static %}
+{% block content %}
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Products</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: lime !important;
+    }
+
+    .temp-dark {
+        color: lime !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    .main {
+        margin-top: 130px;
+        display: flex;
+        justify-content: center;
+        
+    }
+
+    .con {
+        border:1px solid black;
+        margin:20px;
+        padding:20px;
+        width: fit-content;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% if pdtdata %}
+
+        <div class="container">
+            <div class="row main">
+                {% for i in pdtdata %}
+                <div class="col-3 con">
+                    <img src="{{ i.productid.pdt_image.url }}" alt="" width="220" style="border-radius: 10%;" height="200"><br>
+                    <table width="220" cellpadding="5px">
+                        <tr>
+                            <td>Item Name</td>
+                            <td>{{i.productid.pdt_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Quantity</td>
+                            <td>{{i.mquantity}}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Amount</td>
+                            <td>{{i.productid.pdt_rate}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Amount</td>   
+                            <td>{{i.mquantity|mul:i.productid.pdt_rate}}</td>
+                        </tr>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+
+        <!-- <table align="center">
+            <tr>
+                {% for i in pdtdata %}
+                <td>
+                    <div style="border:1px solid black;margin:20px;padding:20px">
+                    <img src="{{ i.productid.pdt_image.url }}" alt="" width="220" height="200"><br>
+                    <table width="220" cellspacing="10px">
+                        <tr>
+                            <td>Item Name</td>
+                            <td>{{i.productid.pdt_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Quantity</td>
+                            <td>{{i.mquantity}}</td>
+                        </tr>
+                        <tr>
+                            <td>Item Amount</td>
+                            <td>{{i.productid.pdt_rate}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Amount</td>   
+                            <td>{{i.mquantity|mul:i.productid.pdt_rate}}</td>
+                        </tr>
+                    </table>
+                </td>
+                {% if forloop.counter|divisibleby:3 %}
+                </tr>
+                <tr>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table> -->
+        {% else %}
+        <h2 align="center" style="color: red;">No Products</h2>
+        {% endif %}
+    </form>
+</body>
+</html>
+{% endblock content %}

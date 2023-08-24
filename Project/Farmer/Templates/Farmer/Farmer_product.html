@@ -1,0 +1,172 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Product</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+
+    .sel-box {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px rgb(215, 215, 215) solid;
+        width: 200px;
+    }
+
+    .tex-box {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px rgb(215, 215, 215) solid;
+        width: 200px;
+    }
+
+    .bt-n {
+        padding: 10px 30px;
+        border-radius: 10px;
+        border: none;
+        color: white;
+        background-color: #3866a9;
+    }
+
+    .bt-n:hover {
+        background-color: limegreen;
+    }
+
+    .link {
+        background-color: #3866a9;
+        padding: 10px 17px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .link:hover {
+        background-color: limegreen;
+    }
+</style>
+<body>
+    <form action="" method="post" id="farmerproductform" data-place-url="{% url 'webfarmer:ajaxsubcat' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table style="margin-top: 130px;margin-left: 600px;" cellpadding="10px">
+            <tr>
+                <td>Category</td>
+                <td>
+                    <select name="selcat" id="selcat" class="sel-box" required="required">
+                        <option value="">...Select...</option>
+                        {% for i in cat %}
+                        <option value="{{i.id}}">{{i.cat_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Sub Category</td>
+                <td>
+                    <select name="selsubcat" id="selsubcat" class="sel-box" required="required">
+                        <option value="">...Select...</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Item Name</td>
+                <td><input type="text" name="txtname" id="" class="tex-box" placeholder="Item Name" required="required" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>Rate</td>
+                <td><input type="text" name="txtrate" id="" class="tex-box" placeholder="Rate" required="required" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><textarea name="txtdes" id="" cols="20" rows="5" class="tex-box" placeholder="Description" required="required" autocomplete="off"></textarea></td>
+            </tr>
+            <tr>
+                <td>Stock</td>
+                <td><input type="text" name="txtstock" id="" class="tex-box" placeholder="Stock" required="required" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td>Image</td>
+                <td><input type="file" name="txtimage" id="" required="required"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="Ok" name="btnsub" class="bt-n"></td>
+            </tr>
+        </table>
+        {% if pro %}
+        <script>alert('Product Inserted...')
+        window.location='/Farmer/product/'
+        </script>
+        {% endif %}
+        <br>
+        <table width="1500" style="margin-left: 10px;">
+            <tr>
+                <th>Sl.No</th>
+                <th>Item Name</th>
+                <th>Item Rate</th>
+                <th>Item Discription</th>
+                <th>Stock</th>
+                <th>Item Image</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th colspan="2" align="center">Action</th> 
+            </tr>
+            {% for i in pdt %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.pdt_name}}</td>
+                <td>{{i.pdt_rate}}</td>
+                <td width="500px">{{i.pdt_dis}}</td>
+                {% if i.pdt_stock <= 0 %}
+                <td style="color:red">Out Of Stock</td>
+                {% else %}
+                <td>{{i.pdt_stock}}</td>
+                {% endif %}
+                <td><img src="{{i.pdt_image.url}}" alt="" width="40" height="60"></td>
+                <td>{{i.subcategory.cat.cat_name}}</td>
+                <td>{{i.subcategory.subcat_name}}</td>
+                <td width="150px"><a href="{% url 'webfarmer:stock' i.id %}" style="color: white;"><div class="link">Update Stock</div></a>
+                    <a href="{% url 'webfarmer:deleteitem' i.id %}" style="color: white;"><div class="link" style="margin-top: 10px;">Delete Item</div></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    {% if de %}
+    <script>alert('Data Deleted...')
+    window.location='/Farmer/product/'
+    </script>
+    {% endif %}
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#selcat").change(function () {
+        var did = $(this).val();
+        var ur = $("#farmerproductform").attr("data-place-url");
+        $.ajax({
+            url: ur,
+            data: { disd: did, },
+            success: function (data) {
+                $("#selsubcat").html(data);
+            },
+        });
+    });
+    </script>
+    {% endblock content %}

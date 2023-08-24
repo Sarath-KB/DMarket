@@ -1,0 +1,53 @@
+{% extends 'Subadmin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reply</title>
+</head>
+<body>
+    <form action="" method="post">
+        <div style="margin: 20px;">
+            <div class="container-fluid pt-4 px-4">
+                <h3 style="color: #009CFF;">Reply</h3>
+                <div class="bg-light rounded h-100 p-4">
+        <table width="700" class="table table-hover">
+            <tr>
+                <th colspan="7" align="center">REPLY</th>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>Complaint Content</th>
+                <th>Sub Admin</th>
+                <th>District</th>
+                <th>Send Date</th>
+                <th>Reply</th>
+                <th>Reply Date</th>
+            </tr>
+            <tr>
+                {% for i in subad %}
+                <td>{{forloop.counter}}</td>
+                <td>{{i.complaint_con}}</td>
+                <td>{{i.subadmin.sad_name}}</td>
+                <td>{{i.subadmin.district.district_name}}</td>
+                <td>{{i.sdate}}</td>
+                {% if i.replay == "" %}
+                <td style="color: red;" >N/A</td>
+                <td style="color: red;" >N/A</td>
+                {% else %}
+                <td>{{i.replay}}</td>
+                <td>{{i.rdate}}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+        </div>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,207 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Farmer</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/background.jpg' %}");
+        background-size: 1540px 900px;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .far-card {
+        background-color: rgba(255, 255, 255, 0.455);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 40px 40px 70px rgb(0, 0, 0);
+    }
+
+    .far-card:hover {
+        transition: transform 0.5s;
+        transform: scale(0.9);
+    }
+
+    .search-area {
+        margin-top: 100px;
+    }
+
+    .link {
+        padding: 5px;
+        color: black;
+        background: none;
+        border: none;
+        border-radius: 5px;
+        padding-left: 27px;
+        padding-right: 31px;
+    }
+
+    .let-color {
+        color: black;
+    }
+
+    .scontainer {
+        margin: 0 20px;
+    }
+</style>
+<body>
+    <form action="" method="post" id="searchfarmer" data-place-url="{% url 'webadmin:ajaxplace'%}" data-localplace-url="{% url 'webguest:ajaxlocplace' %}" data-farmer-url="{% url 'webcustomer:ajaxfarmer' %}">
+        <div class="search-area">
+            <table align="center" class="d-card" style="margin-top: 120px;"> 
+                <tr>
+                    <td class="let-color">District</td>
+                    <td>
+                        <select name="seldis" id="seldis" class="selectbox">
+                            <option>...Select...</option>
+                            {% for i in dis %}
+                            <option value="{{i.id}}">{{i.district_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="let-color">Place</td>
+                    <td>
+                        <select name="selplace" id="selplace" class="selectbox">
+                            <option value="">...Select...</option>
+                        </select>
+                    </td>
+                    <td class="let-color">Local Place</td>
+                    <td>
+                        <select name="sellocplace" id="sellocplace" class="selectbox">
+                            <option value="">...Select...</option>
+                        </select>
+                    </td>
+                </tr>
+                
+            </table>
+        </div>
+    </form>
+
+
+    <div class="container">
+        <div class="row" id="result" style="gap:4rem; justify-content: center; margin-top: 20px;">
+            {% for i in far %}
+            <div class="col-3 far-card">
+                <div style="text-align:center;border:1px solid white;padding:20px;color: white;">
+                    <div><img src="{{i.far_photo.url}}" alt="" width="140" style="border-radius: 10px;" height="140">
+                    </div>
+                    <div>{{i.far_name}}</div>
+                    <div>{{i.far_contact}}</div>
+                    <div>{{i.far_email}}</div>
+                    <div><a href="{% url 'webcustomer:farmarpro' i.id %}"><button class="link">Show More</button></a></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- <div class="container">
+        <div id="result">
+            {% for i in far %}
+                <div class="col-3 far-card">
+                    <div style="text-align:center;border:1px solid white;padding:20px;color: white;">
+                        <div><img src="{{i.far_photo.url}}" alt="" width="140" style="border-radius: 10px;" height="140"></div>
+                        <div>{{i.far_name}}</div>
+                        <div>{{i.far_contact}}</div>
+                        <div>{{i.far_email}}</div>
+                        <div><a href="{% url 'webcustomer:farmarpro' i.id %}"><button class="link">Show More</button></a></div>
+                    </div>
+                </div>
+        {% endfor %}
+        </div>
+        </div> -->
+
+
+
+        <!-- <table cellspacing="60" align="center" id="result">
+            <tr>
+                {% for i in far %}
+                    <td>
+                        <div style="text-align:center;border:1px solid black;margin:22px;padding:20px">
+                        <img src="{{i.far_photo.url}}" alt="" width="140" height="140"><br>
+                        {{i.far_name}}<br>
+                        {{i.far_contact}}<br>
+                        {{i.far_email}}
+                        <p align="right"><a href="{% url 'webcustomer:farmarpro' i.id %}">Show More</a></p>
+                    </div>
+                    </td>
+                    {% if forloop.counter|divisibleby:4 %}
+            </tr>
+            <tr>
+                {% endif %}
+            {% endfor %}
+        </table> -->
+    </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#seldis").change(function () {
+        var did = $(this).val();
+        var pid = document.getElementById("selplace").value;
+        var lpid = document.getElementById("sellocplace").value;
+        var ur = $("#searchfarmer").attr("data-place-url");
+        $.ajax({
+            url: ur,
+            data: { disd: did, },
+            success: function (data) {
+                $("#selplace").html(data);
+
+                var ur = $("#searchfarmer").attr("data-farmer-url");
+        $.ajax({
+            url: ur,
+            data: { did: did,pid: pid, lpid: lpid },
+            success: function (data) {
+                $("#result").html(data);
+            },
+        });
+            },
+        });
+    });
+    $("#selplace").change(function () {
+        var pid = $(this).val();
+        var lpid = document.getElementById("sellocplace").value;
+        var did = document.getElementById("seldis").value;
+        var ur = $("#searchfarmer").attr("data-localplace-url");
+        $.ajax({
+            url: ur,
+            data: { disd: pid, },
+            success: function (data) {
+                $("#sellocplace").html(data);
+
+                var ur = $("#searchfarmer").attr("data-farmer-url");
+        $.ajax({
+            url: ur,
+            data: { did: did,pid: pid, lpid: lpid },
+            success: function (data) {
+                $("#result").html(data);
+            },
+        });
+            },
+        });
+    });
+
+    $("#sellocplace").change(function () {
+        var lpid = $(this).val();
+        var pid = document.getElementById("selplace").value;
+        var did = document.getElementById("seldis").value;
+        var ur = $("#searchfarmer").attr("data-farmer-url");
+        $.ajax({
+            url: ur,
+            data: { did: did,pid: pid, lpid: lpid },
+            success: function (data) {
+                $("#result").html(data);
+            },
+        });
+    });
+    </script>
+
+    {% endblock content %}

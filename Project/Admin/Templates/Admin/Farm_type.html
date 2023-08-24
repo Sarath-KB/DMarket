@@ -1,0 +1,66 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Type</title>
+</head>
+
+<h3 align="center" style="color: #009CFF;">Add Farm Type</h3>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+        <table align="center">
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="txtfarmtype" id="" value="{{editdata.farm_type}}" required="required" autocomplete="off" pattern="[a-zA-Z ]{4}" title="farm nama should be minimum 4 letters " class="form-control" placeholder="Localplace">
+                        <label for="floatingInput">Farm Type</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" class="btn btn-outline-primary m-2" value="Save" name="btnsub"></td>
+            </tr>
+        </table>
+        <br><br>
+        <div class="bg-light rounded h-100 p-4">
+        <table width="300" class="table table-hover">
+            <tr>
+                <th>Sl.No</th>
+                <th>Farm type</th>
+                <th colspan="2" align="center">Action</th>
+            </tr>
+            {% for i in fmdata %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.farm_type}}</td>
+                <td><a href="{% url 'webadmin:deletefarmtype' i.id %}">Delete</a></td>
+                <td><a href="{% url 'webadmin:editfarmtype' i.id %}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if farinsmsg %}
+    <script>alert('Data Inserted....')</script>
+    {% endif %}
+    {% if d %}
+    <script>alert('Data Deleted..')
+    window.location='/Madmin/farmtype/'
+    </script>
+    {% endif %}
+    {% if ed %}
+    <script>alert('Data Updated..')
+    window.location='/Madmin/farmtype/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content  %}

@@ -1,0 +1,39 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedbacks</title>
+</head>
+
+<h3 align="center" style="color: #009CFF;">Feed Backs</h3>
+<body>
+    <form action="" method="post">
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table width="400" class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Content</th>
+                <th>Users</th>
+                <th>Date</th>
+            </tr>
+            {% for i in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.feedback_con}}</td>
+                <td>{{i.customer.cus_name}}{{i.market.mar_name}}{{i.farmer.far_name}}{{i.subadmin.sad_name}}</td>
+                <td>{{i.date}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock content %}

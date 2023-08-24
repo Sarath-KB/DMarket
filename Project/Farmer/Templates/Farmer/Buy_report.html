@@ -1,0 +1,142 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Report</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+
+    .main {
+        margin-top: 130px;
+        margin-left: 530px;
+        padding: 15px;
+        width: fit-content;
+    }
+
+    .main:hover {
+        background-color: rgb(213, 213, 213);
+        border-radius: 10px;
+        transition: 0.5s;
+    }
+
+    .date-box {
+        padding: 9px;
+        border-radius: 10px;
+        border: 1px black solid;
+        margin-left: 13px;
+        margin-right: 11px;
+    }
+    .bt {
+        padding: 10px;
+        background-color: #3866a9;
+        border-radius: 10px;
+        border: none;
+    }
+    .bt:hover {
+        background-color: limegreen;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        <div class="main">
+            <table>
+                <tr>
+                    <td>From Date</td>
+                    <td><input type="date" class="date-box" name="txtfdate" id="txtfdate"></td>
+                    <td>To Date</td>
+                    <td><input type="date" class="date-box" name="txttdate" id="txttdate"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="res">
+        {% if book %}
+            <table width="700" cellpadding="10px" style="margin-left: 450px;">
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            
+                {% for i,j,c in book %}
+        
+                <tr align="center">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.booking_date }}</td>
+                    <!-- <td>{{ c.productid.market.mar_name }}</td> -->
+                    <td>D MARKET</td>
+                    <td>
+                    {{j}}
+                    </td>
+                    {% if i.booking_status == 1 %}
+                        <td style="color: green;">Payed</td>
+                    {% elif i.booking_status == 2 %}
+                        <td style="color: red;">Cash On Delivery</td>
+                    {% else %}
+                        <td style="color: lime;">Delivered</td>
+                    {% endif %}
+                    <td><a href="{% url 'webfarmer:mydeliveredproduct' i.id %}" class="bt" style="color: white;">View Product</a></td>
+                </tr>
+            
+                {% endfor %}
+            
+            </table>
+        {% else %}
+            <h2 style="color: red; margin-top: 130px;" align="center">No Data</h2>
+        {% endif %}
+    </form>
+</div>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#txtfdate").change(function () {
+        var fdate = $(this).val();
+        var edate=document.getElementById("txttdate").value;
+        //alert(fdate);
+        //alert(edate);
+        
+        $.ajax({
+            url: '/Farmer/ajaxbuyreport/',
+            data: { fdate: fdate,edate:edate },
+            success: function (data) {
+                $("#res").html(data);
+            },
+        });
+    });
+    $("#txttdate").change(function () {
+        var edate = $(this).val();
+        var fdate=document.getElementById("txtfdate").value;
+        //alert(edate);
+        
+        $.ajax({
+            url: '/Farmer/ajaxbuyreport/',
+            data: { fdate: fdate,edate:edate },
+            success: function (data) {
+                $("#res").html(data);
+            },
+        });
+    });
+    </script>
+{% endblock content %}

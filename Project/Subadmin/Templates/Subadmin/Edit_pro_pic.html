@@ -1,0 +1,37 @@
+{% extends 'Subadmin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile Picture</title>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table align="center">
+            <tr>
+                <td align="center"><img src="{{ data.sad_photo.url }}" alt="" width="200" height="200"></td>
+            </tr>
+            <tr>
+                <td><input type="file" class="form-control" required="required" name="txtpic"></td>
+            </tr>
+            <tr>
+                <td align="center"><input type="submit" class="btn btn-primary" value="Update" name="Update"></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if pic %}
+    <script>alert("Profile Photo Updated...")
+    window.location='/Subadmin/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

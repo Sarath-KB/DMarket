@@ -1,0 +1,66 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed Back</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/feedback.jpg' %}");
+        background-size: 1000px 800px;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .con {
+        margin-left: 400px;
+        margin-top: 100px;
+        border: none;
+    }
+
+    .button {
+        padding: 10px 20px;
+        background-color: transparent;
+        border: 1px black solid;
+        border-radius: 5px;
+    }
+
+    .button:hover{
+        background-color: #ffc801;
+        transition: 0.5s;
+    }
+
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 ;
+    }
+
+    .temp-dark {
+        color: #3866a9;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>
+                    <textarea name="txtfeedback" id="txtfeedback" cols="130" rows="23" class="con" required="required" autocomplete="off"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><input type="submit" value="Send" class="button"></td>
+            </tr>
+        </table>
+    </form>
+    {% if ins1 %}
+    <script>alert("Feed Back Send Sucessfully...")
+    window.location='/Farmer/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

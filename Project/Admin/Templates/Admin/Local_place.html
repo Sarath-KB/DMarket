@@ -1,0 +1,101 @@
+{% extends 'Admin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Place</title>
+</head>
+<body>
+    <form action="" method="post" id="Localplaceform" data-place-url="{% url 'webadmin:ajaxplace'%}">
+        {% csrf_token %}
+        <h3 align="center" style="color: #009CFF;">Local Place</h3>
+        <div class="container-fluid pt-4 px-4">
+        <table align="center">
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <select name="seldis" id="seldis" class="form-select" required="required" aria-label="Floating label select example">
+                            <option value="">...Select...</option>
+                            {% for i in district %}
+                            <option value="{{i.id}}">{{i.district_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="floatingSelect">District</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <select name="selplace" id="selplace" class="form-select" required="required" aria-label="Floating label select example">
+                            <option value="">...Select...</option>
+                        </select>
+                        <label for="floatingSelect">Place</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="txtlocplace" id="" class="form-control" required="required" autocomplete="off" pattern="[a-zA-Z]{4}" title="Local place should be minimum 4 letters" placeholder="Localplace">
+                        <label for="floatingInput">Local Place</label>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input class="btn btn-outline-primary m-2" type="submit" value="Save" name="btnsub"> <input class="btn btn-outline-primary m-2" type="reset" value="Cancel" name="btncancel"></td>
+            </tr>
+        </table>
+        <br><br>
+        <div class="bg-light rounded h-100 p-4">
+        <table width="500" class="table table-hover">
+            <tr>
+                <th>Sl.No</th>
+                <th>District</th>
+                <th>Place</th>
+                <th>Local Place</th>
+                <th>Action</th>
+            </tr>
+            {% for i in loc %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.pla.district.district_name}}</td>
+                <td>{{i.pla.place_name}}</td>
+                <td>{{i.loc_place_name}}</td>
+                <td><a href="{% url 'webadmin:deletelocplace' i.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if locinsmsg %}
+    <script>alert('Data Inserted....')</script>
+    {% endif %}
+    {% if de %}
+    <script>alert('Data Deleted..')
+    window.location='/Madmin/local_place/'
+    </script>
+    {% endif %}
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#seldis").change(function () {
+        var did = $(this).val();
+        var ur = $("#Localplaceform").attr("data-place-url");
+        $.ajax({
+            url: ur,
+            data: { disd: did, },
+            success: function (data) {
+                $("#selplace").html(data);
+            },
+        });
+    });
+    </script>
+{% endblock content %}

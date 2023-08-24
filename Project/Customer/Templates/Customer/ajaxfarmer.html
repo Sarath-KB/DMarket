@@ -1,0 +1,79 @@
+<style>
+    body {
+        background-color: rgb(165, 165, 165);
+    }
+
+    .far-card {
+        background-color: rgba(255, 255, 255, 0.455);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 40px 40px 70px rgb(0, 0, 0);
+    }
+
+    .search-area {
+        margin-top: 100px;
+    }
+
+    .link {
+        /* background-color: black; */
+        padding: 5px;
+        color: black;
+        background: none;
+        border: none;
+        border-radius: 5px;
+        padding-left: 27px;
+        padding-right: 31px;
+    }
+</style>
+
+
+<div class="container">
+    <div class="row" id="result" style="gap:4rem; justify-content: center; margin-top: 20px;">
+        {% for i in fardata %}
+        <div class="col-3 far-card">
+            <div style="text-align:center;border:1px solid white;padding:20px;color: white;">
+                <div><img src="{{i.far_photo.url}}" alt="" width="140" style="border-radius: 10px;" height="140">
+                </div>
+                <div>{{i.far_name}}</div>
+                <div>{{i.far_contact}}</div>
+                <div>{{i.far_email}}</div>
+                <div><a href="{% url 'webcustomer:farmarpro' i.id %}"><button class="link">Show More</button></a></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+<!-- <div id="result">
+    {% for i in fardata %}
+        <div class="col-3 far-card">
+            <div><img src="{{i.far_photo.url}}" alt="" width="140" style="border-radius: 10px;" height="140"></div>
+            <div>{{i.far_name}}</div>
+            <div>{{i.far_contact}}</div>
+            <div>{{i.far_email}}</div>
+            <div><a href="{% url 'webcustomer:farmarpro' i.id %}"><button class="link">Show More</button></a></div>
+        </div>
+{% endfor %}
+</div> -->
+
+<!-- <table cellspacing="60" align="center">
+    <tr>
+        {% for i in fardata %}
+            <td>
+                <div style="text-align:center;border:1px solid black;margin:22px;padding:20px">
+                <img src="{{i.far_photo.url}}" alt="" width="140" height="140"><br>
+                {{i.far_name}}<br>
+                {{i.far_contact}}<br>
+                {{i.far_email}}
+                <p align="right"><a href="{% url 'webcustomer:farmarpro' i.id %}">Show More</a></p>
+            </div>
+            </td>
+            {% if forloop.counter|divisibleby:4 %}
+    </tr>
+    <tr>
+        {% endif %}
+    {% endfor %}
+</table> -->

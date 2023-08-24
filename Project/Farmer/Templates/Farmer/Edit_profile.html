@@ -1,0 +1,89 @@
+{% extends 'Farmer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<style>
+    body {
+        background-color: rgb(230, 234, 237);
+    }
+    .navbar .navbar-nav .nav-link {
+    color: #3866a9 !important;
+    }
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark {
+        color: #3866a9 !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+
+    .b {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px rgb(208, 208, 208) solid;
+    }
+
+    .m {
+        margin-top: 130px;
+        margin-left: 600px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 0 30px;
+        width: fit-content;
+    }
+
+    .bn {
+        padding: 10px 50px;
+        background-color: #3866a9;
+        color: white;
+        border: none;
+        border-radius: 10px;
+    }
+</style>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="m">
+            <table cellpadding="10px">
+                <tr> 
+                    <td>Name</td>
+                    <td><input type="text" name="txtname" id="" value="{{prodata.far_name}}" class="b"></td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td><input type="text" name="txtcon" id="" value="{{prodata.far_contact}}" class="b"></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="email" name="txtemail" id="" value="{{prodata.far_email}}" class="b"></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td><textarea name="txtaddress" id="" cols="20" rows="5" class="b">{{prodata.far_address}}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Update" class="bn" name="btnsub"></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    {% if ed %}
+    <script>alert('Profile Updated..')
+    window.location='/Farmer/My_profile/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

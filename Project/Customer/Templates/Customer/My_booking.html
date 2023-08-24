@@ -1,0 +1,197 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Booking</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/background.jpg' %}");
+        background-size: 1540px 900px;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .main-con {
+        margin-top: 100px;
+    }
+
+    .tb {
+        background-color: rgba(255, 255, 255, 0.567);
+        margin-left: 20px;
+        border-radius: 9px;
+    }
+
+    .tb:hover {
+        transition: transform 0.5s;
+        transform: scale(0.9);
+        box-shadow: 0 30px 30px black;
+    }
+
+    .bt {
+        background-color: transparent;
+        border: none;
+    }
+</style>
+<body>
+    <!-- <form action="" method="post"> -->
+        {% if fardata and mardata %}
+            <table class="main-con">
+                <tr>
+                    <td>
+                        <!-- <div style="border:1px solid black;margin:10px;padding:5px"> -->
+                        <table width="700" class="tb">
+                            <tr>
+                                <th colspan="6">Market Booking</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>From</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            {% for i,m,mc in mardata %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.booking_date}}</td>
+                                <!-- <td>{{mc.productid.market.mar_name}}</td> -->
+                                <td>D MARKET</td>
+                                <td>{{m}}</td>
+                                {% if i.booking_status == '1' %}
+                                    <td style="color: green;" >Payed</td>
+                                {% elif i.booking_status == '2' %}
+                                    <td style="color: red;" >Cash On Delivery</td>
+                                {% elif i.booking_status == '0' %}
+                                <td style="color: red;">Pending</td>
+                                {% else %}
+                                    <td style="color: green;">Delivered</td>
+                                {% endif %}
+                                <td><a href="{% url 'webcustomer:mymarketproduct' i.id %}"><button class="bt">View Product</button></a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                    <td>
+                        <!-- <div style="border:1px solid black;margin:10px;padding:5px"> -->
+                        <table width="700" class="tb">
+                            <tr>
+                                <th colspan="6">Farmer Booking</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>From</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            {% for j,f,fc in fardata %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{j.booking_date}}</td>
+                                <!-- <td>{{fc.productid.farmer.far_name}}</td> -->
+                                <td>D MARKET</td>
+                                <td>{{f}}</td>
+                                {% if j.booking_status == '1' %}
+                                <td style="color: green;" >Payed</td>
+                                {% elif j.booking_status == '2' %}
+                                <td style="color: red;" >Cash On Delivery</td>
+                                {% elif j.booking_status == '0' %}
+                                <td style="color: red;">Pending</td>
+                                {% else %}
+                                <td style="color: green;">Delivered</td>
+                                {% endif %}
+                                <td><a href="{% url 'webcustomer:myfarmerproduct' j.id %}"><button class="bt">View Products</button></a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        {% elif mardata %}
+            <div class="main-con" align="center">
+                <table cellspacing="10px" width="700" class="tb">
+                    <tr>
+                        <th colspan="6">Market Booking</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>From</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for i,m,mc in mardata %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.booking_date}}</td>
+                        <!-- <td>{{mc.productid.market.mar_name}}</td> -->
+                        <td>D MARKET</td>
+                        <td>{{m}}</td>
+                        {% if i.booking_status == '1' %}
+                            <td style="color: green;" >Payed</td>
+                        {% elif i.booking_status == '2' %}
+                            <td style="color: red;" >Cash On Delivery</td>
+                        {% elif i.booking_status == '0' %}
+                        <td style="color: red;">Pending</td>
+                        {% else %}
+                            <td style="color: green;">Delivered</td>
+                        {% endif %}
+                        <td><a href="{% url 'webcustomer:mymarketproduct' i.id %}">View Product</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% elif fardata %}
+            <div class="main-con">
+                <table width="700" style="margin: 20px;" cellspacing="10px" class="tb">
+                    <tr>
+                        <th colspan="6">Farmer Booking</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>From</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for j,f,fc in fardata %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{j.booking_date}}</td>
+                        <!-- <td>{{fc.productid.farmer.far_name}}</td> -->
+                        <td>D MARKET</td>
+                        <td>{{f}}</td>
+                        {% if j.booking_status == '1' %}
+                        <td style="color: green;" >Payed</td>
+                        {% elif j.booking_status == '2' %}
+                        <td style="color: red;" >Cash On Delivery</td>
+                        {% elif j.booking_status == '0' %}
+                        <td style="color: red;">Pending</td>
+                        {% else %}
+                        <td style="color: green;">Delivered</td>
+                        {% endif %}
+                        <td><a href="{% url 'webcustomer:myfarmerproduct' j.id %}">View Products</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+        <h2 align="center" style="color: white;margin-top: 250px;">No Bookings</h2>
+        {% endif %}
+        
+
+        
+    </form>
+</body>
+</html>
+{% endblock content %}

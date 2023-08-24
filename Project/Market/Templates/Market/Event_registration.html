@@ -1,0 +1,140 @@
+{% extends 'Market/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+</head>
+<style>
+    .navbar .navbar-nav .nav-link {
+    color: lime !important;
+    }
+
+    .temp-dark {
+        color: lime !important;
+    }
+
+    .navbar .navbar-nav .nav-link:hover {
+    color: limegreen !important;
+    }
+
+    .temp-dark:hover {
+        color: limegreen !important;
+    }
+    
+    .con{
+        margin-top: 100px;
+        margin-left: 590px;
+        color: black;
+    }
+
+    .text-box {
+        padding: 9px;
+        border-radius: 7px;
+        border: 1px gray solid;
+    }
+
+    .area-box {
+        padding: 11px;
+        border-radius: 8px;
+    }
+
+    .link {
+        color: white;
+        border: none;
+        background-color: lime;
+        padding: 10px 17px;
+        border-radius: 10px;
+    }
+
+    .link:hover {
+        color: white;
+        background-color: limegreen;
+    }
+</style>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table class="con" cellpadding="10px">
+            <tr>
+                <td>Event Name</td>
+                <td><input type="text" name="txteventname" placeholder="Event Name" required="required" autocomplete="off" class="text-box" id=""></td>
+            </tr>
+            <tr>
+                <td>Event Deatils</td>
+                <td><textarea name="txteventdetails" class="area-box" id="" required="required" autocomplete="off" placeholder="Event Details" cols="20" rows="8"></textarea></td>
+            </tr>
+            <tr>
+                <td>Event Photo</td>
+                <td><input type="file" name="txteventphoto" id=""></td>
+            </tr>
+            <tr>
+                <td>Event From Date</td>
+                <td><input type="date" name="txteventfdate" class="text-box" required="required" autocomplete="off" id="myDateFrom"></td>
+            </tr>
+            <tr>
+                <td>Event To Date</td>
+                <td><input type="date" name="txteventtdate" class="text-box" required="required" autocomplete="off" id="myDateTo"></td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2"><input type="submit" value="Submit" class="link" name="btnsub"></td>
+            </tr>
+        </table>
+        <br>
+
+        <table width="1450" cellspacing="10px" style="margin-left: 40px;">
+            <tr>
+                <th>#</th>
+                <th>Event Name</th>
+                <th>Event From Date</th>
+                <th>Event To Date</th>
+                <th>Event Deatils</th>
+                <th>Event Photo</th>
+                <th>Action</th>
+            </tr>
+            {% for i in event %}
+            <tr align="center">
+                <td>{{forloop.counter}}</td>
+                <td>{{i.event_name}}</td>
+                <td>{{i.event_fdate}}</td>
+                <td>{{i.event_tdate}}</td>
+                <td width="400">{{i.event_details}}</td>
+                <td><img src="{{ i.event_photo.url }}" alt="" width="100" height="100"></td>
+                <td width="350px">
+                    <div style="margin-top: 20px;">
+                        <a href="{% url 'webmarket:viewapplication' i.id %}" class="link">View Application</a>
+                        <a href="{% url 'webmarket:viewapprovel' i.id %}" class="link">Approved Request</a>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <a href="{% url 'webmarket:viewreject' i.id %}" class="link">Rejected Request</a>
+                        <a href="{% url 'webmarket:viewarrive' i.id %}" class="link">Arrived Applications</a>
+                    </div>
+                    <div style="margin-top: 20px;"><a href="{% url 'webmarket:deleteevent' i.id %}" class="link">Delete</a></div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+    </form>
+    <script>
+    var currentDate = new Date();
+    var formattedDate = currentDate.toISOString().split('T')[0];
+    document.getElementById('myDateFrom').setAttribute('min', formattedDate);
+    document.getElementById('myDateTo').setAttribute('min', formattedDate);
+    </script>
+    {% if status %}
+    <script>alert("Event Registred..!!")
+    window.location='/Market/home/'
+    </script>
+    {% endif %}
+    {% if er %}
+    <script>alert("Can't select previous date..!!")
+    window.location='/Market/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

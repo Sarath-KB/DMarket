@@ -1,0 +1,57 @@
+{% extends 'Subadmin/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replay</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded h-100 p-4">
+        <table cellspacing="10" align="center">
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="twext" name="replyto" readonly value="{{comdata.customer.cus_name}}{{comdata.market.mar_name}}{{comdata.farmer.far_name}}" id="" class="form-control" placeholder="replyto">  
+                        <label for="floatingInput">Reply to</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating mb-3">
+                        <input type="twext" name="content" readonly value="{{comdata.complaint_con}}" id="" class="form-control" placeholder="content">  
+                        <label for="floatingInput">Content</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-floating">
+                        <textarea name="txtreplay" id="" class="form-control" placeholder="reply" required="required" autocomplete="off"
+                    id="floatingTextarea" style="height: 250px;width: 300px;"></textarea>
+                        <label for="floatingTextarea">Enter your replys...</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" colspan="2"><input type="submit" class="btn btn-outline-primary m-2" value="Reply" name="btnc"></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+    </form>
+    {% if send %}
+    <script>alert("Replay Send Sucessfully...")
+    window.location='/Subadmin/home/'
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

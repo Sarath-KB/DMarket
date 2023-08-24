@@ -1,0 +1,64 @@
+{% extends 'Customer/header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Event</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'Customer/img/BG-Image1.jpg' %}");
+    }
+</style>
+<body>
+    <div class="container-fluid d-bg-image">
+    <form action="" method="post">
+        <div class="d-profile">
+        <table class="d-card">
+            <tr>
+                <td>
+                    <!-- <div style="text-align:center;border:1px solid black;"> -->
+                    <img src="{{edata.event_photo.url}}" alt="" width="250" height="250" style="border-radius: 50%;">
+                    <table cellspacing="15px"  style="color: black;">
+                        <tr>
+                            <td>Event</td>
+                            <td class="textbox">{{edata.event_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Details</td>
+                            <td width="150" class="textarea">{{edata.event_details}}</td>
+                        </tr>
+                        <tr>
+                            <td>Event From Date</td>
+                            <td class="textbox">{{edata.event_fdate}}</td>
+                        </tr>
+                        <tr>
+                            <td>Event To Date</td>
+                            <td class="textbox">{{edata.event_tdate}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><a href="{% url 'webcustomer:applyevent' edata.id %}">Apply</a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            {% if mes %}
+           
+            <script>
+                if (confirm("Do You Want To Confirm"))
+                {
+                    //alert("Hai");
+                    window.location="../../Customer/apllied/";
+                }
+            </script>
+            {% endif %}
+        </table>
+        </div>
+    </form>
+    </div>
+</body>
+</html>
+{% endblock content %}
